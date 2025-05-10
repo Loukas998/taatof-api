@@ -14,17 +14,14 @@ return new class extends Migration
         Schema::create('stories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('project_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
             $table->string('title')->nullable();
             $table->date('date_of_submitting')->nullable();
-            $table->text('body')->nullable();
             $table->text('note')->nullable();
             $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('state_id')->references('id')->on('states')->onDelete('cascade');
 
         });
