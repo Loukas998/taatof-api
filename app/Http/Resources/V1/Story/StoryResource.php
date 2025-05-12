@@ -17,14 +17,14 @@ class StoryResource extends JsonResource
         return [
             'id'                 => $this->id,
             'user_id'            => $this->user_id,
-            'project_id'         => $this->project_id,
             'state_id'           => $this->state_id,
             'title'              => $this->title,
-            'body'               => $this->body,
             'date_of_submitting' => $this->date_of_submitting,
             'note'               => $this->note,
             'status'             => $this->status,
-            'views'              => $this->views 
+            'views'              => $this->views,
+            'blog'               => BlogStoryResource::make($this->whenLoaded('blogStory'), $this->blogStory),
+            'vlog'               => VlogStoryResource::make($this->whenLoaded('vlogStory'), $this->vlogStory),
         ];
     }
 }

@@ -11,7 +11,7 @@ class CreateStoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,16 +21,32 @@ class CreateStoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'user_id'            => 'required|integer|exists:users,id',
-            'project_id'         => 'required|integer|exists:projects,id',
-            'state_id'           => 'required|integer|exists:states,id',
-            'title'              => 'required|string|max:255',
-            'body'               => 'required|string',
-            'note'               => 'required|string',
-            'status'             => 'required|string|enum:accepted|pending|rejected',
-            'image'              => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'video'              => 'nullable|video|mimes:mp4|max:2048',
+        $rules = [
+            'user_id'      => 'required|integer|exists:users,id',
+            'state_id'     => 'required|integer|exists:states,id',
+            'title'        => 'required|string|max:255',
+            'note'         => 'required|string',
+            'status'       => 'required|string|enum:accepted|pending|rejected',
+            'categories'   => 'required|array',
+            'categories.*' => 'exists:categories,id',
+            'type'         => 'required|string|in:blog,vlog',
         ];
+
+        if($rules['type'] === 'blog')
+        {
+            $rules += [
+                'body'    => 'required|string',
+                'summary' => 'required|string',
+                'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+            ];
+        }elseif($rules['type'] === 'vlog')
+        {
+            $rules += [
+                'video'   => 'required|video|mimes:mp4|max:2048',
+                'caption' => 'nullable|string'
+            ];
+        }
+
+        return $rules;
     }
 }

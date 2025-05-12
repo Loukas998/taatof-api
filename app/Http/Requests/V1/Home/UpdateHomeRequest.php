@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\V1\Category;
+namespace App\Http\Requests\V1\Home;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCategoryRequest extends FormRequest
+class UpdateHomeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,7 @@ class CreateCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id'  => 'required|integer|exists:projects,id',
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            //
         ];
     }
 }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('blog_stories', function (Blueprint $table) {
             $table->id();
-            $table->text('body')->nullable();
+            $table->longText('body')->nullable();
+            $table->text('summary')->nullable();
             $table->unsignedBigInteger('story_id')->nullable()->unique();
             $table->timestamps();
 

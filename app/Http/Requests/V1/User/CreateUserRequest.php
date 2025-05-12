@@ -23,6 +23,7 @@ class CreateUserRequest extends FormRequest
     {
         return [
             'employee_id'  => 'nullable|integer|unique:users,employee_id',
+            'project_id'   => 'nullable|integer|unique:projects,id',   
             'first_name'   => 'required|string|max:255',
             'middle_name'  => 'nullable|string|max:255',
             'last_name'    => 'required|string|max:255',

@@ -26,11 +26,6 @@ class Story extends Model implements HasMedia
         return $this->belongsToMany(Category::class);
     }
 
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
-    }
-
     public function state(): BelongsTo
     {
         return $this->belongsTo(State::class);
@@ -41,12 +36,12 @@ class Story extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function blogStories(): HasOne
+    public function blogStory(): HasOne
     {
         return $this->hasOne(BlogStory::class);
     }
 
-    public function vlogStories(): HasOne
+    public function vlogStory(): HasOne
     {
         return $this->hasOne(VlogStory::class);
     }
