@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
+            $table->enum('role', ['admin', 'employee', 'participant'])->nullable();
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();
             $table->string('email')->nullable()->unique();

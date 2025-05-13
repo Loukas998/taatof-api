@@ -26,7 +26,7 @@ class UpdateProjectRequest extends FormRequest
             'home_description'               => 'required|string',
             'detailed_description'           => 'required|string',
             'images'                         => 'nullable|array',
-            'images.*'                       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images.*'                       => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'image_replacements'             => 'nullable|array',
             'image_replacements.*.id'        => 'integer|exists:media,id',
             'image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',

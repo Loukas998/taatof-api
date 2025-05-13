@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('trainings_number')->nullable();
             $table->integer('trainers_number')->nullable();
             $table->integer('stories_number')->nullable();
-            $table->integer('life_groups_number')->nullable();
+            $table->integer('life_groups_members')->nullable();
             $table->timestamps();
         });
     }

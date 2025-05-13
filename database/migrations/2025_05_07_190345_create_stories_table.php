@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->date('date_of_submitting')->nullable();
             $table->text('note')->nullable();
-            $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable();
+            $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable()->default('pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

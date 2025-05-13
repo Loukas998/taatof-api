@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Resreach;
+namespace App\Models\Research;
 
 use Illuminate\Database\Eloquent\Model;
 

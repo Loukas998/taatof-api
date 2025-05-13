@@ -15,13 +15,13 @@ class HomeResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'                 => $this->id,
-            'title'              => $this->title,
-            'subtitle'           => $this->subtitle,
-            'trainings_number'   => $this->trainings_number,
-            'trainers_number'    => $this->trainers_number,
-            'stories_number'     => $this->stories_number,
-            'life_groups_number' => $this->life_groups_number
+            'id'                  => $this->id,
+            'title'               => $this->title,
+            'subtitle'            => $this->subtitle,
+            'trainings_number'    => $this->trainings_number,
+            'trainers_number'     => $this->trainers_number,
+            'stories_number'      => $this->stories_number,
+            'life_groups_members' => $this->life_groups_number
         ];
     }
 }

@@ -22,23 +22,24 @@ class UpdateStoryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'user_id'      => 'required|integer|exists:users,id',
-            'state_id'     => 'required|integer|exists:states,id',
+            'user_id'      => 'nullable|integer|exists:users,id',
+            'state_id'     => 'nullable|integer|exists:states,id',
             'title'        => 'required|string|max:255',
             'note'         => 'required|string',
-            'status'       => 'required|string|enum:accepted|pending|rejected',
-            'categories'   => 'required|array',
-            'categories.*' => 'exists:categories,id',
+            'status'       => 'required|string|in:accepted,pending,rejected',
+            'categories'   => 'nullable|array',
+            //'categories.*' => 'exists:categories,id',
             'type'         => 'required|string|in:blog,vlog',
         ];
 
-        if($rules['type'] === 'blog')
+        if($this->input('type') === 'blog')
         {
             $rules += [
-                'body'  => 'required|string',
-                'image' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+                'body'    => 'required|string',
+                'summary' => 'required|string',
+                'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
             ];
-        }elseif($rules['type'] === 'vlog')
+        }elseif($this->input('type') === 'vlog')
         {
             $rules += [
                 'video'   => 'required|video|mimes:mp4|max:2048',

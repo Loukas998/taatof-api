@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'email'        => 'required|email|max:255|unique:users,email',
             'phone_number' => 'nullable|string|max:255',
             'password'     => 'required|string|max:255',
-            'role'         => 'required|string|enum:admin,employee,participant',
+            'role'         => 'required|string|in:admin,employee,participant',
         ];
     }
 }

@@ -10,6 +10,7 @@ class Home extends Model implements HasMedia
 {
     use InteractsWithMedia;
     protected $guarded = [];
+    protected $table = 'home';
 
     public function registerMediaCollections(): void
     {

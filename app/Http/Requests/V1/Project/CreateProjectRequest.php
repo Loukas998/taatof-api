@@ -25,8 +25,8 @@ class CreateProjectRequest extends FormRequest
             'title'                => 'required|string|max:255',
             'home_description'     => 'required|string',
             'detailed_description' => 'required|string',
-            'images'               => 'required|array',
-            'images.*'             => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'images'               => 'nullable|array',
+            'images.*'             => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
