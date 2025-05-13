@@ -8,10 +8,16 @@ use App\Http\Requests\V1\Home\CreateHomeRequest;
 use App\Http\Requests\V1\Home\UpdateHomeRequest;
 use App\Http\Resources\V1\Home\HomeResource;
 use App\Models\Home\Home;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */

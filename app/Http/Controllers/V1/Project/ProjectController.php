@@ -8,10 +8,16 @@ use App\Http\Requests\V1\Project\CreateProjectRequest;
 use App\Http\Requests\V1\Project\UpdateProjectRequest;
 use App\Http\Resources\V1\Project\ProjectResource;
 use App\Models\Project\Project;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */

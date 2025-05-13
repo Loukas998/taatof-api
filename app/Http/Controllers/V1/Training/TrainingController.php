@@ -7,10 +7,16 @@ use App\Http\Requests\V1\Training\CreateTrainingRequest;
 use App\Http\Requests\V1\Training\UpdateTrainingRequest;
 use App\Http\Resources\V1\Training\TrainingResource;
 use App\Models\Training\Training;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */

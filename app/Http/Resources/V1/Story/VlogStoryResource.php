@@ -17,7 +17,8 @@ class VlogStoryResource extends JsonResource
         return [
             'id'       => $this->id,
             'caption'  => $this->caption,
-            'story_id' => $this->story_id
+            'story_id' => $this->story_id,
+            'video'    => $this->getFirstMediaUrl('video'),
         ];
     }
 }

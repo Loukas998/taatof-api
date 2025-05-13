@@ -7,10 +7,16 @@ use App\Http\Requests\V1\Department\CreateDepartmentRequest;
 use App\Http\Requests\V1\Department\UpdateDepartmentRequest;
 use App\Http\Resources\V1\Department\DepartmentResource;
 use App\Models\Department\Department;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class DepartmentController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */

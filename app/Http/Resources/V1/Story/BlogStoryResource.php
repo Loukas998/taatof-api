@@ -17,7 +17,8 @@ class BlogStoryResource extends JsonResource
         return [
             'id'       => $this->id,
             'body'     => $this->body,
-            'story_id' => $this->story_id
+            'story_id' => $this->story_id,
+            'image'    => $this->getFirstMediaUrl('image'),
         ];
     }
 }

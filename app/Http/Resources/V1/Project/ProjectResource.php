@@ -19,6 +19,12 @@ class ProjectResource extends JsonResource
             'title'                => $this->title,
             'home_description'     => $this->home_description,
             'detailed_description' => $this->detailed_description,
+            'images'               => $this->getMedia('images')->map(function($media) {
+                return [
+                    'id'    => $media->id,
+                    'url'   => $media->getFullUrl()
+                ];
+            }),
         ];
     }
 }

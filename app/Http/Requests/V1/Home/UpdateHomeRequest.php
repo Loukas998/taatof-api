@@ -22,12 +22,15 @@ class UpdateHomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'               => 'required|string',
-            'subtitle'            => 'required|string',
-            'trainings_number'    => 'required|integer',
-            'trainers_number'     => 'required|integer',
-            'stories_number'      => 'required|integer',
-            'life_groups_members' => 'required|integer',
+            'title'                          => 'required|string',
+            'subtitle'                       => 'required|string',
+            'trainings_number'               => 'required|integer',
+            'trainers_number'                => 'required|integer',
+            'stories_number'                 => 'required|integer',
+            'life_groups_members'            => 'required|integer',
+            'image_replacements'             => 'nullable|array',
+            'image_replacements.*.id'        => 'integer|exists:media,id',
+            'image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',
         ];
     }
 }

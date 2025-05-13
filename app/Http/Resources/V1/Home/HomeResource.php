@@ -21,7 +21,13 @@ class HomeResource extends JsonResource
             'trainings_number'    => $this->trainings_number,
             'trainers_number'     => $this->trainers_number,
             'stories_number'      => $this->stories_number,
-            'life_groups_members' => $this->life_groups_number
+            'life_groups_members' => $this->life_groups_number,
+            'images'               => $this->getMedia('slider_images')->map(function($media) {
+                return [
+                    'id'    => $media->id,
+                    'url'   => $media->getFullUrl()
+                ];
+            }),
         ];
     }
 }

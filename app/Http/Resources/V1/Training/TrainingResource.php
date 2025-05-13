@@ -15,8 +15,9 @@ class TrainingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title' => $this->title,
+            'title'       => $this->title,
             'description' => $this->description,
+            'image'       => $this->getFirstMediaUrl('image'),
         ];
     }
 }

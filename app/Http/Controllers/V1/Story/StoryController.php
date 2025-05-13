@@ -8,10 +8,16 @@ use App\Http\Requests\V1\Story\CreateStoryRequest;
 use App\Http\Requests\V1\Story\UpdateStoryRequest;
 use App\Http\Resources\V1\Story\StoryResource;
 use App\Models\Story\Story;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class StoryController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */

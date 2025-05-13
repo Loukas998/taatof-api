@@ -19,7 +19,13 @@ class DepartmentResource extends JsonResource
             'title'               => $this->title,
             'description'         => $this->description,
             'participants_number' => $this->participants_number,
-            'groups_number'       => $this->groups_number
+            'groups_number'       => $this->groups_number,
+            'images'              => $this->getMedia('images')->map(function($media) {
+                return [
+                    'id'    => $media->id,
+                    'url'   => $media->getFullUrl()
+                ];
+            }),
         ];
     }
 }

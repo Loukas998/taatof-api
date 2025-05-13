@@ -8,10 +8,16 @@ use App\Http\Requests\V1\Category\CreateCategoryRequest;
 use App\Http\Requests\V1\Category\UpdateCategoryRequest;
 use App\Http\Resources\V1\Category\CategoryResource;
 use App\Models\Category\Category;
+use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+    private $fileUploaderService;
+    public function __construct(FileUploaderService $fileUploaderService)
+    {
+        $this->fileUploaderService = $fileUploaderService;
+    }
     /**
      * Display a listing of the resource.
      */
