@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\V1\Research;
 
 use App\Http\Controllers\Controller;
+use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Research\CreateResearchRequest;
 use App\Http\Requests\V1\Research\UpdateResearchRequest;
 use App\Http\Resources\V1\Research\ResearchResource;
 use App\Models\Research\Research;
 use Illuminate\Http\Request;
+use LDAP\Result;
 
 class ResearchController extends Controller
 {
@@ -16,7 +18,7 @@ class ResearchController extends Controller
      */
     public function index()
     {
-        //
+        return ApiResponse::success(ResearchResource::collection(Research::all(), 'Research retrieved'));
     }
 
     /**
@@ -24,15 +26,18 @@ class ResearchController extends Controller
      */
     public function store(CreateResearchRequest $request)
     {
-        //
+        $data = $request->validated();
+        $research = Research::create($data);
+        return ApiResponse::success(ResearchResource::make($research, 'Research created'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Research $research)
+    public function show($id)
     {
-        //
+        $research = Research::findOrFail($id);
+        return ApiResponse::success(ResearchResource::make($research, 'Research retrieved'));
     }
 
     /**
@@ -40,29 +45,18 @@ class ResearchController extends Controller
      */
     public function update(UpdateResearchRequest $request, Research $research)
     {
-        //
+        $data = $request->validated();
+        $research = Research::create($data);
+        return ApiResponse::success(ResearchResource::make($research, 'Research updated'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Research $research)
+    public function destroy($id)
     {
-        //
+        $research = Research::findOrFail($id);
+        $research->delete();
+        return ApiResponse::success(null, 'Research retrieved');
     }
-}
-
-class ProjectController extends Controller
-{
-    //
-}
-
-class HomeController extends Controller
-{
-    //
-}
-
-class DepartmentController extends Controller
-{
-    //
 }

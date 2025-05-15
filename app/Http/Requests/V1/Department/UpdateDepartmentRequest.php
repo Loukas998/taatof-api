@@ -24,6 +24,8 @@ class UpdateDepartmentRequest extends FormRequest
         return [
             'title'                          => 'required|string',
             'description'                    => 'required|string',
+            'images'                         => 'nullable|array',
+            'images.*'                       => 'mimes:jpg,png,jpeg,gif,svg',
             'image_replacements'             => 'nullable|array',
             'image_replacements.*.id'        => 'integer|exists:media,id',
             'image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',

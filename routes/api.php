@@ -11,6 +11,7 @@ Route::prefix('v1')->group(function () use ($dev_path) {
     include "{$dev_path}Department/Department.php";
     include "{$dev_path}Manual/Manual.php";
     include "{$dev_path}Project/Project.php";
+    include "{$dev_path}Home/Home.php";
     include "{$dev_path}Research/Research.php";
     include "{$dev_path}State/State.php";
     include "{$dev_path}Story/Story.php";

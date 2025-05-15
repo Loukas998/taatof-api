@@ -12,43 +12,8 @@ use Illuminate\Http\Request;
 
 class StateController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return ApiResponse::success(StateResource::collection(State::all()), 'States retrieved');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(CreateStateRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(State $state)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateStateRequest $request, State $state)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(State $state)
-    {
-        //
     }
 }

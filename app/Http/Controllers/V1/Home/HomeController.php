@@ -18,29 +18,17 @@ class HomeController extends Controller
     {
         $this->fileUploaderService = $fileUploaderService;
     }
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Home $home)
+    public function show($id)
     {
+        $home = Home::findOrFail($id);
         return ApiResponse::success(HomeResource::make($home), 'Home page content retrieved successfully');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateHomeRequest $request, Home $home)
+    public function update(UpdateHomeRequest $request, $id)
     {
         $data = $request->validated();
-        
+        $home = Home::findOrFail($id);
         $home->update([
             'title'               => $data['title'] ?? $home->title,
             'subtitle'            => $data['subtitle'] ?? $home->subtitle,
@@ -49,15 +37,22 @@ class HomeController extends Controller
             'stories_number'      => $data['stories_number'] ?? $home->stories_number,
             'life_groups_members' => $data['life_groups_members'] ?? $home->life_groups_members,
         ]);
+
+        if(isset($request['images']))
+        {
+
+            $this->fileUploaderService->uploadMultipleFiles($home, $request['images'], 'slider_images');
+        }
+
+        
+        if(isset($request['image_replacements']))
+        {
+            foreach($request['image_replacements'] as $image)
+            {
+                $this->fileUploaderService->replaceFile($home, $image, $image['id'], 'slider_images');
+            }
+        }
         
         return ApiResponse::success(HomeResource::make($home), 'Home page content updated successfully');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Home $home)
-    {
-        //
     }
 }

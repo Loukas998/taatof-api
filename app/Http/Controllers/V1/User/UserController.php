@@ -60,4 +60,18 @@ class UserController extends Controller
         $user->delete();
         return ApiResponse::success(null, 'User deleted successfully');
     }
+
+    public function getParticipantByAuditor()
+    {
+        $auditorId = request()->query('auditorId');
+        $participants = User::where('auditor_id', $auditorId)->get();
+        return ApiResponse::success($participants, 'Participants retrieved successfully');
+    }
+
+    public function getAuditorParticipant()
+    {
+        $user = request()->user('sanctum');
+        $participants = $user->participants();
+        return ApiResponse::success($participants, 'Participants retrieved successfully');
+    }
 }

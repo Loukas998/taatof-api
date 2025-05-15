@@ -38,7 +38,11 @@ class ProjectController extends Controller
             'home_description'     => $data['description'],
             'detailed_description' => $data['status'],
         ]);
-        
+
+        if(isset($request['images']))
+        {
+            $this->fileUploaderService->uploadMultipleFiles($project, $request['images'],'images');
+        } 
         return ApiResponse::success(ProjectResource::make($project), 'Project created successfully', 201);
     }
 
@@ -63,7 +67,19 @@ class ProjectController extends Controller
             'home_description'     => $data['home_description'] ?? $data['home_description'],
             'detailed_description' => $data['detailed_description'] ?? $data['detailed_description'],
         ]);
-        
+
+        if(isset($request['images']))
+        {
+            $this->fileUploaderService->uploadMultipleFiles($project, $request['images'],'images');
+        }
+        if(isset($request['image_replacements']))
+        {
+            foreach($request['image_replacements'] as $image)
+            {
+                $this->fileUploaderService->replaceFile($project, $image, $image['id'],'images');
+            }
+        }
+
         return ApiResponse::success(ProjectResource::make($project), 'Project updated successfully');
     }
 
@@ -72,7 +88,6 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        // Check if project has related categories before deleting
         if ($project->categories && $project->categories->count() > 0) {
             return ApiResponse::error('Cannot delete project with associated categories', 422);
         }
