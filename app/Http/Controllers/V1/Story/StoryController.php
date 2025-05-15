@@ -33,7 +33,7 @@ class StoryController extends Controller
     {
         $data = $request->validated();
         $story = Story::create([
-            'user_id'            => $data['user_id'],
+            'user_id'            => $request->user('sanctum')->id,
             'state_id'           => $data['state_id'],
             'title'              => $data['title'],
             'date_of_submitting' => $data['date_of_submitting'],
@@ -41,6 +41,7 @@ class StoryController extends Controller
             'status'             => $data['status'],
         ]);
 
+        $story->categories()->sync($data['categories']);
 
         if($data['type'] === 'blog')
         {
@@ -49,6 +50,10 @@ class StoryController extends Controller
                 'body'     => $data['body'],
             ]);
             $story->load('blogStory');
+            if($request->has('image'))
+            {
+                $this->fileUploaderService->uploadSingleFile($story->blogStory, $request['image'], 'image');
+            }
         }elseif($data['type'] === 'vlog')
         {
             $story->blogStory()->create([
@@ -66,6 +71,14 @@ class StoryController extends Controller
     public function show($id)
     {
         $story = Story::findOrFail($id);
+
+        if($story->blogStory)
+        {
+            $story->load('blogStory');
+        }elseif($story->vlogStory)
+        {
+            $story->load('vlogStory');
+        } 
         
         return ApiResponse::success(StoryResource::make($story), 'Story retrieved');
     }
@@ -79,7 +92,6 @@ class StoryController extends Controller
 
         $story = Story::findOrFail($id);
         $story->update([
-            'user_id'  => $data['user_id'],
             'state_id' => $data['state_id'],
             'title'    => $data['title'],
             'note'     => $data['note'],
@@ -103,6 +115,10 @@ class StoryController extends Controller
                 ]);
             }
             $story->load('blogStory');
+            if($request->has('image'))
+            {
+                $this->fileUploaderService->uploadSingleFile($story->blogStory, $request['image'], 'image');
+            }
         } elseif ($data['type'] === 'vlog') {
             if ($story->vlogStory) {
                 $story->vlogStory->update([
@@ -138,5 +154,29 @@ class StoryController extends Controller
         $story->delete();
         
         return ApiResponse::success(null, 'Story deleted successfully');
+    }
+
+    public function getStoriesByState()
+    {
+        $stateId = request()->query('stateId');
+        $stories = Story::where('state_id', $stateId)->get();
+        return ApiResponse::success(StoryResource::collection($stories), 'Stories retrieved successfully');
+    }
+
+    public function getStoriesByCategory()
+    {
+        $categoryId = request()->query('categoryId');
+        $stories = Story::whereHas('categories', function($query) use($categoryId) {
+            $query->where('category_story.category_id', $categoryId);
+        })->get();
+
+        return ApiResponse::success($stories, 'Stories retrieved');
+    }
+
+    public function getParticipantStories()
+    {
+        $user = request()->user('sanctum');
+        $stories = $user->stories;
+        return ApiResponse::success(StoryResource::collection($stories), 'Stories retrieved successfully');
     }
 }

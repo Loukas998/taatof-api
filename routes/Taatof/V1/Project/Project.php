@@ -3,4 +3,9 @@
 use App\Http\Controllers\V1\Project\ProjectController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('projects', ProjectController::class);
+Route::apiResource('projects', ProjectController::class)
+    ->only(['store', 'update', 'delete'])
+    ->middleware(['auth:sanctum', 'role:admin,media']);
+
+Route::apiResource('projects', ProjectController::class)
+    ->only(['show', 'index']);

@@ -23,31 +23,43 @@ class UserSeeder extends Seeder
                 'phone_number' => '0999999994',
                 'password'     => Hash::make('password'),
                 'role'         => 'admin',
-                'employee_id'  => null,
+                'auditor_id'  => null,
                 'project_id'   => null
             ],
 
             [
-                'first_name'   => 'employee1',
-                'middle_name'  => 'employee1',
-                'last_name'    => 'employee1',
-                'email'        => 'employee1@test.com',
+                'first_name'   => 'media',
+                'middle_name'  => 'media',
+                'last_name'    => 'media',
+                'email'        => 'media@test.com',
+                'phone_number' => '0999999998',
+                'password'     => Hash::make('password'),
+                'role'         => 'media',
+                'auditor_id'  => null,
+                'project_id'   => null
+            ],
+
+            [
+                'first_name'   => 'auditor1',
+                'middle_name'  => 'auditor1',
+                'last_name'    => 'auditor1',
+                'email'        => 'auditor1@test.com',
                 'phone_number' => '0999999993',
                 'password'     => Hash::make('password'),
-                'role'         => 'employee',
-                'employee_id'  => null,
+                'role'         => 'auditor',
+                'auditor_id'  => null,
                 'project_id'   => null
             ],
 
             [
-                'first_name'   => 'employee2',
-                'middle_name'  => 'employee2',
-                'last_name'    => 'employee2',
-                'email'        => 'employee2@test.com',
+                'first_name'   => 'auditor2',
+                'middle_name'  => 'auditor2',
+                'last_name'    => 'auditor2',
+                'email'        => 'auditor2@test.com',
                 'phone_number' => '0999999995',
                 'password'     => Hash::make('password'),
-                'role'         => 'employee',
-                'employee_id'  => null,
+                'role'         => 'auditor',
+                'auditor_id'   => null,
                 'project_id'   => null
             ],
 
@@ -58,8 +70,8 @@ class UserSeeder extends Seeder
                 'email'        => 'participant1@test.com',
                 'phone_number' => '0999999992',
                 'password'     => Hash::make('password'),
-                'role'         => 'employee',
-                'employee_id'  => 2,
+                'role'         => 'participant',
+                'auditor_id'   => 3,
                 'project_id'   => 1
             ],
 
@@ -70,8 +82,8 @@ class UserSeeder extends Seeder
                 'email'        => 'participant2@test.com',
                 'phone_number' => '0999999991',
                 'password'     => Hash::make('password'),
-                'role'         => 'employee',
-                'employee_id'  => 3,
+                'role'         => 'participant',
+                'auditor_id'   => 4,
                 'project_id'   => 1
             ],
         ];

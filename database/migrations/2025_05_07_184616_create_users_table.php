@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->enum('role', ['admin', 'employee', 'participant'])->nullable();
-            $table->unsignedBigInteger('employee_id')->nullable();
+            $table->enum('role', ['admin', 'auditor', 'media', 'participant'])->nullable();
+            $table->unsignedBigInteger('auditor_id')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();
             $table->string('email')->nullable()->unique();
             $table->string('phone_number')->nullable()->unique();
@@ -25,22 +25,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('employee_id')->references('id')->on('users')->onDelete('cascade');
-        });
-
-        Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();
-            $table->string('token');
-            $table->timestamp('created_at')->nullable();
-        });
-
-        Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->foreignId('user_id')->nullable()->index();
-            $table->string('ip_address', 45)->nullable();
-            $table->text('user_agent')->nullable();
-            $table->longText('payload');
-            $table->integer('last_activity')->index();
+            $table->foreign('auditor_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -50,7 +35,5 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
-        Schema::dropIfExists('sessions');
     }
 };

@@ -22,7 +22,7 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_id'  => 'nullable|integer|unique:users,employee_id',
+            'auditor_id'   => 'nullable|integer|unique:users,auditor_id',
             'project_id'   => 'nullable|integer|unique:projects,id',   
             'first_name'   => 'required|string|max:255',
             'middle_name'  => 'nullable|string|max:255',
@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
             'email'        => 'required|email|max:255|unique:users,email',
             'phone_number' => 'nullable|string|max:255',
             'password'     => 'required|string|max:255',
-            'role'         => 'required|string|in:admin,employee,participant',
+            'role'         => 'required|string|in:admin,auditor,media,participant',
         ];
     }
 }

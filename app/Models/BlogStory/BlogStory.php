@@ -3,10 +3,9 @@
 namespace App\Models\BlogStory;
 
 use App\Models\Story\Story;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BlogStory extends Model
+class BlogStory extends Story
 {
     protected $guarded = [];
 

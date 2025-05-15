@@ -3,4 +3,4 @@
 use App\Http\Controllers\V1\User\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::apiResource('users', UserController::class);
+Route::apiResource('users', UserController::class)->middleware(['auth:sanctum', 'role:admin']);

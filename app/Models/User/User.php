@@ -10,12 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
    protected $guarded = [];
 
@@ -24,7 +25,7 @@ class User extends Authenticatable
     */
    public function participants(): HasMany 
    {
-       return $this->hasMany(User::class, 'employee_id');
+       return $this->hasMany(User::class, 'auditor_id');
    }
 
    /**
@@ -32,7 +33,7 @@ class User extends Authenticatable
     */
    public function employee(): BelongsTo
    {
-       return $this->belongsTo(User::class, 'employee_id');
+       return $this->belongsTo(User::class, 'auditor_id');
    }
 
    public function stories(): HasMany
@@ -48,19 +49,8 @@ class User extends Authenticatable
        return $this->role === 'admin';
    }
    
-   /**
-    * Check if user is an employee
-    */
-   public function isEmployee(): bool
-   {
-       return $this->role === 'employee';
-   }
-   
-   /**
-    * Check if user is a participant
-    */
-   public function isParticipant(): bool
-   {
-       return $this->role === 'participant';
-   }
+    public function hasRole($role)
+    {
+        return $this->role === $role;
+    }
 }

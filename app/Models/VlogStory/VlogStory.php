@@ -6,7 +6,7 @@ use App\Models\Story\Story;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class VlogStory extends Model
+class VlogStory extends Story
 {
     protected $guarded = [];
 
