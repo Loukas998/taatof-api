@@ -22,14 +22,10 @@ class CreateStoryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'user_id'            => 'nullable|integer|exists:users,id',
             'state_id'           => 'nullable|integer|exists:states,id',
             'title'              => 'required|string|max:255',
-            'note'               => 'nullable|string',
-            'status'             => 'required|string|in:accepted,pending,rejected',
-            'date_of_submitting' => 'nullable|date_format:Y-m-d',
-            'categories'         => 'nullable|array',
-            //'categories.*'       => 'exists:categories,id',
+            'categories'         => 'required|array',
+            'categories.*'       => 'exists:categories,id',
             'type'               => 'required|string|in:blog,vlog',
         ];
 

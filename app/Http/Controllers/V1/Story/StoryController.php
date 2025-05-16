@@ -6,8 +6,10 @@ use App\Http\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\V1\Story\CreateStoryRequest;
 use App\Http\Requests\V1\Story\UpdateStoryRequest;
+use App\Http\Requests\V1\Story\UpdateStoryStatusRequest;
 use App\Http\Resources\V1\Story\StoryResource;
 use App\Models\Story\Story;
+use App\Notifications\UpdateStoryStatus;
 use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
 
@@ -36,9 +38,8 @@ class StoryController extends Controller
             'user_id'            => $request->user('sanctum')->id,
             'state_id'           => $data['state_id'],
             'title'              => $data['title'],
-            'date_of_submitting' => $data['date_of_submitting'],
-            'note'               => $data['note'],
-            'status'             => $data['status'],
+            'date_of_submitting' => now(),
+            'status'             => 'pending',
         ]);
 
         $story->categories()->sync($data['categories']);
@@ -94,8 +95,6 @@ class StoryController extends Controller
         $story->update([
             'state_id' => $data['state_id'],
             'title'    => $data['title'],
-            'note'     => $data['note'],
-            'status'   => $data['status'],
         ]);
         
         if (isset($data['categories'])) {
@@ -129,6 +128,10 @@ class StoryController extends Controller
                     'caption' => $data['caption'],
                 ]);
             }
+            if($request->has('video'))
+            {
+                $this->fileUploaderService->uploadSingleFile($story->blogStory, $request['video'], 'video');
+            }
             $story->load('vlogStory');
         }
         
@@ -150,7 +153,6 @@ class StoryController extends Controller
             $story->vlogStory->delete();
         }
         
-        // Delete the story
         $story->delete();
         
         return ApiResponse::success(null, 'Story deleted successfully');
@@ -178,5 +180,17 @@ class StoryController extends Controller
         $user = request()->user('sanctum');
         $stories = $user->stories;
         return ApiResponse::success(StoryResource::collection($stories), 'Stories retrieved successfully');
+    }
+
+    public function updateStoryStatus(UpdateStoryStatusRequest $request, $id)
+    {
+        $data = $request->validated();
+        $story = Story::findOrFail($id);
+        $story->update([
+            'status' => $data['status'],
+            'note'   => $data['note'] ?? $story->note,
+        ]);
+        $story->participant->notify(new UpdateStoryStatus());
+        return ApiResponse::success(StoryResource::make($story), 'Story status updated successfully');
     }
 }

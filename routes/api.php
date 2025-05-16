@@ -23,3 +23,18 @@ Route::prefix('v1')->group(function () use ($dev_path) {
 Route::post('login', [AuthController::class, 'login']);
 Route::delete('logout', [AuthController::class, 'logout']);
 
+Route::get('users/notifications', function () {
+    $notifications = auth('sanctum')->user()->unreadNotifications;
+    return response()->json(['notifications' => $notifications]);
+});
+
+Route::put('users/notifications/{id}', function ($id) {
+    $notification = auth('sanctum')->user()->readNotifications->find($id);
+    if ($notification) {
+        $notification->markAsRead();
+        return response()->json(['message' => 'Notification marked as read']);
+    } else {
+        return response()->json(['message' => 'Notification not found'], 404);
+    }
+});
+
