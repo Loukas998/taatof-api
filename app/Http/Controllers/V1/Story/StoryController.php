@@ -40,6 +40,7 @@ class StoryController extends Controller
             'title'              => $data['title'],
             'date_of_submitting' => now(),
             'status'             => 'pending',
+            'views'              => 0
         ]);
 
         $story->categories()->sync($data['categories']);
@@ -72,7 +73,12 @@ class StoryController extends Controller
     public function show($id)
     {
         $story = Story::findOrFail($id);
-
+        if(auth('sanctum')->user())
+        {
+            $story->views += 1;
+            $story->save();
+        }
+        
         if($story->blogStory)
         {
             $story->load('blogStory');
