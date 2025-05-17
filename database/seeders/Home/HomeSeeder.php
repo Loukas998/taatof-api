@@ -14,8 +14,14 @@ class HomeSeeder extends Seeder
     public function run(): void
     {
         Home::create([
-            'title'               => 'Spreading the Pillars of Nonviolent Communication',
-            'subtitle'            => 'Building bridges through empathy, understanding, and authentic expression. Our foundation is dedicated to creating a more peaceful world through compassionate communication.',
+            'title'               => [
+                'en' => 'Spreading the Pillars of Nonviolent Communication',
+                'ar' => ''
+            ],
+            'subtitle'            => [
+                'en' => 'Building bridges through empathy, understanding, and authentic expression. Our foundation is dedicated to creating a more peaceful world through compassionate communication.',
+                'ar' => ''
+            ],
             'trainings_number'    => 40,
             'trainers_number'     => 800,
             'stories_number'      => 400,

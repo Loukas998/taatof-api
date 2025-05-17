@@ -13,20 +13,90 @@ class StateSeeder extends Seeder
     public function run(): void
     {
         $states = [
-            ['name' => 'دمشق',],
-            ['name' => 'ريف دمشق'],
-            ['name' => 'طرطوس'],
-            ['name' => 'اللاذقية'],
-            ['name' => 'حماة'],
-            ['name' => 'حمص'],
-            ['name' => 'القنيطرة'],
-            ['name' => 'درعا'],
-            ['name' => 'السويداء'],
-            ['name' => 'حلب'],
-            ['name' => 'ديرالزور'],
-            ['name' => 'الحسكة'],
-            ['name' => 'الرقة'],
-            ['name' => 'إدلب'],
+            [
+                'name' => [
+                    'en' => 'Damascus',
+                    'ar' => 'دمشق'
+                ],
+            ],
+            [
+                'name' => [
+                    'ar' => 'ريف دمشق',
+                    'en' => 'Rif Dimashq'
+                ]
+            ],
+            [
+                'name' => [
+                    'ar' => 'طرطوس',
+                    'en' => 'Tartous'
+                ]
+            ],
+            [
+                'name' => [
+                    'ar' => 'اللاذقية',
+                    'en' => 'Lattakia'
+                ]
+            ],
+            [
+                'name' => [
+                    'ar' => 'حماة',
+                    'en' => 'Hama'
+                ]
+            ],
+            [
+                'name' => [
+                    'ar' => 'حمص',
+                    'en' => 'Homs'
+                ]
+            ],
+            [
+                'name' => [
+                    'ar' => 'القنيطرة',
+                    'en' => 'Al Qunaitira'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Daraa',
+                    'ar' => 'درعا'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Al Swaidaa',
+                    'ar' => 'السويداء'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Aleppo',
+                    'ar' => 'حلب'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Deir Al Zor',
+                    'ar' => 'ديرالزور'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Al Hasaka',
+                    'ar' => 'الحسكة'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Al Raqqa',
+                    'ar' => 'الرقة'
+                ]
+            ],
+            [
+                'name' => [
+                    'en' => 'Idlib',
+                    'ar' => 'إدلب'
+                ]
+            ],
         ];
 
         foreach ($states as $state) {

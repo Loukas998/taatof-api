@@ -14,14 +14,32 @@ class ProjectSeeder extends Seeder
     {
         $projects = [
             [
-                'title'                => 'Project 1',
-                'home_description'     => 'Description for Project 1',
-                'detailed_description' => 'Detailed description for Project 1',
+                'title'                => [
+                    'en' => 'Project 1',
+                    'ar' => ''
+                ],
+                'home_description'     => [
+                    'en' => 'Description for Project 1', 
+                    'ar' => ''
+                ],
+                'detailed_description' => [
+                    'en' => 'Detailed description for Project 1',
+                    'ar' => ''
+                ],
             ],
             [
-                'title'                => 'Project 2',
-                'home_description'     => 'Description for Project 2',
-                'detailed_description' => 'Detailed description for Project 2',
+                'title'                => [
+                    'en' => 'Project 2',
+                    'ar' => ''
+                ],
+                'home_description'     => [
+                    'en' => 'Description for Project 2', 
+                    'ar' => ''
+                ],
+                'detailed_description' => [
+                    'en' => 'Detailed description for Project 2',
+                    'ar' => ''
+                ],
             ],
         ];
 
