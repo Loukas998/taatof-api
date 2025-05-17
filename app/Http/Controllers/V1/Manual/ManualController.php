@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Manual\CreateManualRequest;
 use App\Http\Requests\V1\Manual\UpdateManualRequest;
+use App\Http\Resources\V1\Manual\ManualDashResource;
 use App\Http\Resources\V1\Manual\ManualResource;
 use App\Models\Manual\Manual;
 use Illuminate\Http\Request;
@@ -27,9 +28,18 @@ class ManualController extends Controller
     {
         $data = $request->validated();
 
-        $manual = Manual::create($data);
+        $manual = Manual::create([
+            'title' => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar']
+            ],
+            'description' => [
+                'en' => $data['description_en'],
+                'ar' => $data['description_ar'],
+            ]
+        ]);
 
-        return ApiResponse::success(ManualResource::make($manual, 'Manual created'));
+        return ApiResponse::success(ManualDashResource::make($manual, 'Manual created'));
     }
 
     /**
@@ -48,8 +58,17 @@ class ManualController extends Controller
     {
         $data = $request->validated();
         $manual = Manual::findOrFail($id);
-        $manual->update($data);
-        return ApiResponse::success(ManualResource::make($manual, 'Manual updated'));
+        $manual->update([
+            'title' => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar']
+            ],
+            'description' => [
+                'en' => $data['description_en'] ?? $manual->getTranslation('description', 'en', false),
+                'ar' => $data['description_ar'] ?? $manual->getTranslation('description', 'ar', false),
+            ]
+        ]);
+        return ApiResponse::success(ManualDashResource::make($manual, 'Manual updated'));
     }
 
     /**
@@ -59,6 +78,6 @@ class ManualController extends Controller
     {
         $manual = Manual::findOrFail($id);
         $manual->deleted();
-        return ApiResponse::success(ManualResource::make($manual, 'Manual updated'));
+        return ApiResponse::success(null, 'Manual updated');
     }
 }

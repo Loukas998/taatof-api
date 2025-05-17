@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Research\CreateResearchRequest;
 use App\Http\Requests\V1\Research\UpdateResearchRequest;
+use App\Http\Resources\V1\Research\ResearchDashResource;
 use App\Http\Resources\V1\Research\ResearchResource;
 use App\Models\Research\Research;
 use Illuminate\Http\Request;
@@ -27,8 +28,13 @@ class ResearchController extends Controller
     public function store(CreateResearchRequest $request)
     {
         $data = $request->validated();
-        $research = Research::create($data);
-        return ApiResponse::success(ResearchResource::make($research, 'Research created'));
+        $research = Research::create([
+            'title' => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+        ]);
+        return ApiResponse::success(ResearchDashResource::make($research, 'Research created'));
     }
 
     /**
@@ -43,11 +49,17 @@ class ResearchController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateResearchRequest $request, Research $research)
+    public function update(UpdateResearchRequest $request, $id)
     {
         $data = $request->validated();
-        $research = Research::create($data);
-        return ApiResponse::success(ResearchResource::make($research, 'Research updated'));
+        $research = Research::findOrFail($id);
+        $research->update([
+            'title' => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+        ]);
+        return ApiResponse::success(ResearchDashResource::make($research, 'Research updated'));
     }
 
     /**

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
-            $table->integer('participants_number');
-            $table->integer('groups_number');
+            $table->integer('participants_number')->nullable();
+            $table->integer('groups_number')->nullable();
             $table->timestamps();
         });
     }

@@ -23,8 +23,10 @@ class UpdateCategoryRequest extends FormRequest
     {
         return [
             'project_id'  => 'required|integer|exists:projects,id',
-            'name'        => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name_en'        => 'required|string|max:255',
+            'name_ar'        => 'required|string|max:255',
+            'description_en' => 'nullable|string',
+            'description_ar' => 'nullable|string',
             'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }

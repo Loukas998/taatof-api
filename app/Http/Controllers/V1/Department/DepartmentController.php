@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Department\CreateDepartmentRequest;
 use App\Http\Requests\V1\Department\UpdateDepartmentRequest;
+use App\Http\Resources\V1\Department\DepartmentDashResource;
 use App\Http\Resources\V1\Department\DepartmentResource;
 use App\Models\Department\Department;
 use App\Services\FileUploaderService;
@@ -33,13 +34,25 @@ class DepartmentController extends Controller
     {
         $data = $request->validated();
 
-        $department = Department::create($data);
+        $department = Department::create([
+            'title'               => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+            'description'         => [
+                'en' => $data['description_en'],
+                'ar' => $data['description_ar'],
+            ],
+            'groups_number'       => $data['groups_number'] ?? null,
+            'participants_number' => $data['participants_number'] ?? null
+        ]);
+
         if(isset($request['images']))
         {
             $this->fileUploaderService->uploadMultipleFiles($department, $request['images'], 'images');
         }
 
-        return ApiResponse::success(DepartmentResource::make($department), 'Department created');
+        return ApiResponse::success(DepartmentDashResource::make($department), 'Department created');
     }
 
     /**
@@ -61,8 +74,16 @@ class DepartmentController extends Controller
         if($department)
         {
             $department->update([
-                'title'       => $data['title'],
-                'description' => $data['description'],
+                'title'       => [
+                    'en' => $data['title_en'],
+                    'ar' => $data['title_ar'],
+                ],
+                'description' => [
+                    'en' => $data['description_en'],
+                    'ar' => $data['description_ar'],
+                ],
+                'groups_number'       => $data['groups_number'] ?? $department->groups_number,
+                'participants_number' => $data['participants_number'] ?? $department->participants_number
             ]);
 
             if(isset($request['images']))
@@ -77,7 +98,7 @@ class DepartmentController extends Controller
                     $this->fileUploaderService->replaceFile($department, $image, $image['id'], 'images');
                 }
             }
-            return ApiResponse::success(DepartmentResource::make($department), 'Department updated');
+            return ApiResponse::success(DepartmentDashResource::make($department), 'Department updated');
         }
         return ApiResponse::notFound('Department not found');
     }

@@ -22,8 +22,10 @@ class UpdateHomeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'                          => 'required|string',
-            'subtitle'                       => 'required|string',
+            'title_en'                       => 'required|string',
+            'title_ar'                       => 'required|string',
+            'subtitle_en'                    => 'required|string',
+            'subtitle_ar'                    => 'required|string',
             'trainings_number'               => 'required|integer',
             'trainers_number'                => 'required|integer',
             'stories_number'                 => 'required|integer',

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Training\CreateTrainingRequest;
 use App\Http\Requests\V1\Training\UpdateTrainingRequest;
+use App\Http\Resources\V1\Training\TrainingDashResource;
 use App\Http\Resources\V1\Training\TrainingResource;
 use App\Models\Training\Training;
 use App\Services\FileUploaderService;
@@ -32,14 +33,26 @@ class TrainingController extends Controller
     public function store(CreateTrainingRequest $request)
     {
         $data = $request->validated();
-
-        $training = Training::create($data);
+        $training = Training::create([
+            'title'       => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+            'description' => [
+                'en' => $data['description_en'],
+                'ar' => $data['description_ar'],
+            ],
+            'location'    => [
+                'en' => $data['location_en'],
+                'ar' => $data['location_ar'],
+            ]
+        ]);
         if(isset($request['image']))
         {
             $this->fileUploaderService->uploadSingleFile($training, $request['image'], 'image');
         }
 
-        return ApiResponse::success(TrainingResource::make($training), 'Training created');
+        return ApiResponse::success(TrainingDashResource::make($training), 'Training created');
     }
 
     /**
@@ -60,8 +73,14 @@ class TrainingController extends Controller
 
         $training = Training::findOrFail($id);
         $training->update([
-            'title'       => $data['title'],
-            'description' => $data['description']
+            'title'       => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+            'description' => [
+                'en' => $data['description_en'] ?? $training->getTranslation('description', 'en', false),
+                'ar' => $data['description_ar'] ?? $training->getTranslation('description', 'ar', false),
+            ]
         ]);
 
         if(isset($request['image']))
@@ -69,7 +88,7 @@ class TrainingController extends Controller
             $this->fileUploaderService->uploadSingleFile($training, $request['image'], 'image');
         }
 
-        return ApiResponse::success(TrainingResource::make($training), 'Training updated');
+        return ApiResponse::success(TrainingDashResource::make($training), 'Training updated');
     }
 
     /**

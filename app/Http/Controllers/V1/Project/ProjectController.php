@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Project\CreateProjectRequest;
 use App\Http\Requests\V1\Project\UpdateProjectRequest;
+use App\Http\Resources\V1\Project\ProjectDashResource;
 use App\Http\Resources\V1\Project\ProjectResource;
 use App\Models\Project\Project;
 use App\Services\FileUploaderService;
@@ -34,16 +35,25 @@ class ProjectController extends Controller
         $data = $request->validated();
         
         $project = Project::create([
-            'name'                 => $data['name'],
-            'home_description'     => $data['description'],
-            'detailed_description' => $data['status'],
+            'title'                 => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+            'home_description'     => [
+                'en' => $data['home_description_en'],
+                'ar' => $data['home_description_ar'],
+            ],
+            'detailed_description' => [
+                'en' => $data['detailed_description_en'],
+                'ar' => $data['detailed_description_ar']
+            ],
         ]);
 
         if(isset($request['images']))
         {
             $this->fileUploaderService->uploadMultipleFiles($project, $request['images'],'images');
         } 
-        return ApiResponse::success(ProjectResource::make($project), 'Project created successfully', 201);
+        return ApiResponse::success(ProjectDashResource::make($project), 'Project created successfully', 201);
     }
 
     /**
@@ -58,14 +68,25 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, $id)
     {
         $data = $request->validated();
+
+        $project = Project::findOrFail($id);
         
         $project->update([
-            'name'                 => $data['name'] ?? $data['name'],
-            'home_description'     => $data['home_description'] ?? $data['home_description'],
-            'detailed_description' => $data['detailed_description'] ?? $data['detailed_description'],
+            'title'                 => [
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar'],
+            ],
+            'home_description'     => [
+                'en' => $data['home_description_en'],
+                'ar' => $data['home_description_ar'],
+            ],
+            'detailed_description' => [
+                'en' => $data['detailed_description_en'],
+                'ar' => $data['detailed_description_ar']
+            ],
         ]);
 
         if(isset($request['images']))
@@ -80,7 +101,7 @@ class ProjectController extends Controller
             }
         }
 
-        return ApiResponse::success(ProjectResource::make($project), 'Project updated successfully');
+        return ApiResponse::success(ProjectDashResource::make($project), 'Project updated successfully');
     }
 
     /**

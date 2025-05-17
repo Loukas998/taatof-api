@@ -22,10 +22,14 @@ class CreateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string',
-            'description' => 'required|string',
-            'images'      => 'nullable|array',
-            'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title_en'            => 'required|string',
+            'title_ar'            => 'required|string',
+            'description_en'      => 'required|string',
+            'description_ar'      => 'required|string',
+            'participants_number' => 'nullable|integer',
+            'groups_number'       => 'nullable|integer',
+            'images'              => 'nullable|array',
+            'images.*'            => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

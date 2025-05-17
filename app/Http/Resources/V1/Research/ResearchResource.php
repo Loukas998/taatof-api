@@ -16,7 +16,7 @@ class ResearchResource extends JsonResource
     {
         return [
             'id'    => $this->id,
-            'title' => $this->title
+            'title' => $this->getTranslation('title', app()->getLocale())
         ];
     }
 }

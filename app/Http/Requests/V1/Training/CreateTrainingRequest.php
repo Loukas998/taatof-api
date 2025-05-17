@@ -22,9 +22,13 @@ class CreateTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'image'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title_en'       => 'required|string|max:255',
+            'title_ar'       => 'required|string|max:255',
+            'description_en' => 'required|string',
+            'description_ar' => 'required|string',
+            'location_en'    => 'required|string',
+            'location_ar'    => 'required|string',
+            'image'          => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\V1\Category;
+namespace App\Http\Resources\V1\Research;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class ResearchDashResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,9 @@ class CategoryResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'         => $this->id,
-            'name'       => $this->getTranslation('name', app()->getLocale()),
-            'project_id' => $this->project_id
+            'id'       => $this->id,
+            'title_en' => $this->getTranslation('title', 'en'),
+            'title_ar' => $this->getTranslation('title', 'ar')
         ];
     }
 }

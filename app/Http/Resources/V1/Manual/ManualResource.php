@@ -16,8 +16,8 @@ class ManualResource extends JsonResource
     {
         return [
             'id'          => $this->id,
-            'title'       => $this->title,
-            'description' => $this->description,
+            'title'       => $this->getTranslation('title', app()->getLocale()),
+            'description' => $this->getTranslation('description', app()->getLocale()),
         ];
     }
 }

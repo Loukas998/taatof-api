@@ -22,8 +22,12 @@ class UpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'                          => 'required|string',
-            'description'                    => 'required|string',
+            'title_en'                       => 'required|string',
+            'title_ar'                       => 'required|string',
+            'description_en'                 => 'required|string',
+            'description_ar'                 => 'required|string',
+            'participants_number'            => 'nullable|integer',
+            'groups_number'                  => 'nullable|integer',
             'images'                         => 'nullable|array',
             'images.*'                       => 'mimes:jpg,png,jpeg,gif,svg',
             'image_replacements'             => 'nullable|array',

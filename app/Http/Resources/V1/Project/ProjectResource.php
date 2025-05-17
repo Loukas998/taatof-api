@@ -16,9 +16,9 @@ class ProjectResource extends JsonResource
     {
         return [
             'id'                   => $this->id,
-            'title'                => $this->title,
-            'home_description'     => $this->home_description,
-            'detailed_description' => $this->detailed_description,
+            'title'                => $this->getTranslation('title', app()->getLocale()),
+            'home_description'     => $this->getTranslation('home_description', app()->getLocale()),
+            'detailed_description' => $this->getTranslation('detailed_description', app()->getLocale()),
             'images'               => $this->getMedia('images')->map(function($media) {
                 return [
                     'id'    => $media->id,

@@ -22,8 +22,10 @@ class CreateManualRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'       => 'required|string|max:255',
-            'description' => 'required|string',
+            'title_en'       => 'required|string|max:255',
+            'title_ar'       => 'required|string|max:255',
+            'description_en' => 'nullable|string',
+            'description_ar' => 'nullable|string',
         ];
     }
 }

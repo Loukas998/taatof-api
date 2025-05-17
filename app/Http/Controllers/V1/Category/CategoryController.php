@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Category\CreateCategoryRequest;
 use App\Http\Requests\V1\Category\UpdateCategoryRequest;
+use App\Http\Resources\V1\Category\CategoryDashResource;
 use App\Http\Resources\V1\Category\CategoryResource;
 use App\Models\Category\Category;
 use App\Services\FileUploaderService;
@@ -34,12 +35,23 @@ class CategoryController extends Controller
         $data = $request->validated();
         
         $category = Category::create([
-            'project_id' => $data['project_id'],
-            'name' => $data['name'],
-            'description' => $data['description'] ?? null,
+            'project_id'  => $data['project_id'],
+            'name'        => [
+                'en' => $data['name_en'],
+                'ar' => $data['name_ar']
+            ],
+            'description' => [
+                'en' => $data['description_en'] ?? null,
+                'ar' => $data['description_ar'] ?? null,
+            ],
         ]);
+
+        if(isset($request['image']))
+        {
+            $this->fileUploaderService->uploadSingleFile($category, $request['image'], 'image');
+        }
         
-        return ApiResponse::success(CategoryResource::make($category), 'Category created successfully', 201);
+        return ApiResponse::success(CategoryDashResource::make($category), 'Category created successfully', 201);
     }
 
     /**
@@ -53,17 +65,28 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request, $id)
     {
         $data = $request->validated();
-        
+        $category = Category::findOrFail($id);
         $category->update([
-            'project_id' => $data['project_id'] ?? $category->project_id,
-            'name' => $data['name'] ?? $category->name,
-            'description' => $data['description'] ?? $category->description,
+            'project_id'  => $data['project_id'],
+            'name'        => [
+                'en' => $data['name_en'],
+                'ar' => $data['name_ar']
+            ],
+            'description' => [
+                'en' => $data['description_en'] ?? $category->getTranslation('description', 'en', false),
+                'ar' => $data['description_ar'] ?? $category->getTranslation('description', 'ar', false),
+            ],
         ]);
         
-        return ApiResponse::success(CategoryResource::make($category), 'Category updated successfully');
+        if(isset($request['image']))
+        {
+            $this->fileUploaderService->uploadSingleFile($category, $request['image'], 'image');
+        }
+
+        return ApiResponse::success(CategoryDashResource::make($category), 'Category updated successfully');
     }
 
     /**

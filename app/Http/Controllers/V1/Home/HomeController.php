@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Home\CreateHomeRequest;
 use App\Http\Requests\V1\Home\UpdateHomeRequest;
+use App\Http\Resources\V1\Home\HomeDashResource;
 use App\Http\Resources\V1\Home\HomeResource;
 use App\Models\Home\Home;
 use App\Services\FileUploaderService;
@@ -30,8 +31,14 @@ class HomeController extends Controller
         $data = $request->validated();
         $home = Home::findOrFail($id);
         $home->update([
-            'title'               => $data['title'] ?? $home->title,
-            'subtitle'            => $data['subtitle'] ?? $home->subtitle,
+            'title'               => [
+                'en' => $data['title_en'] ?? $home->getTranslation('title', 'en', false),
+                'ar' => $data['title_ar'] ?? $home->getTranslation('title', 'ar', false),
+            ],
+            'subtitle'            => [
+                'en' => $data['subtitle_en'] ?? $home->getTranslation('subtitle', 'en', false),
+                'ar' => $data['subtitle_ar'] ?? $home->getTranslation('subtitle', 'ar', false),
+            ],
             'trainings_number'    => $data['trainings_number'] ?? $home->trainings_number,
             'trainers_number'     => $data['trainers_number'] ?? $home->trainers_number,
             'stories_number'      => $data['stories_number'] ?? $home->stories_number,
@@ -53,6 +60,6 @@ class HomeController extends Controller
             }
         }
         
-        return ApiResponse::success(HomeResource::make($home), 'Home page content updated successfully');
+        return ApiResponse::success(HomeDashResource::make($home), 'Home page content updated successfully');
     }
 }

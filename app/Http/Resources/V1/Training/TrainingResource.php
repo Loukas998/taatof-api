@@ -15,8 +15,9 @@ class TrainingResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'title'       => $this->title,
-            'description' => $this->description,
+            'id'          => $this->id,
+            'title'       => $this->getTranslation('title', app()->getLocale()),
+            'description' => $this->getTranslation('description', app()->getLocale()),
             'image'       => $this->getFirstMediaUrl('image'),
         ];
     }

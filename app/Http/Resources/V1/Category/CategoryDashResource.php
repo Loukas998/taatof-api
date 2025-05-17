@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class CategoryResource extends JsonResource
+class CategoryDashResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,7 +16,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id'         => $this->id,
-            'name'       => $this->getTranslation('name', app()->getLocale()),
+            'name_en'    => $this->getTranslation('name', 'en'),
+            'name_ar'    => $this->getTranslation('name', 'ar'),
             'project_id' => $this->project_id
         ];
     }

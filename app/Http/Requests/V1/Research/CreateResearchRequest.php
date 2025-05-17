@@ -11,7 +11,7 @@ class CreateResearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class CreateResearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string'
+            'title_en' => 'required|string',
+            'title_ar' => 'required|string'
         ];
     }
 }

@@ -5,7 +5,7 @@ namespace App\Http\Resources\V1\Department;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class DepartmentDashResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,8 +16,10 @@ class DepartmentResource extends JsonResource
     {
         return [
             'id'                  => $this->id,
-            'title'               => $this->getTranslation('title', app()->getLocale()),
-            'description'         => $this->getTranslation('description', app()->getLocale()),
+            'title_en'            => $this->getTranslation('title', 'en'),
+            'title_ar'            => $this->getTranslation('title', 'ar'),
+            'description_en'      => $this->getTranslation('description', 'en'),
+            'description_ar'      => $this->getTranslation('description', 'ar'),
             'participants_number' => $this->participants_number,
             'groups_number'       => $this->groups_number,
             'images'              => $this->getMedia('images')->map(function($media) {
