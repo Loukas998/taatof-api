@@ -13,12 +13,14 @@ use Illuminate\Http\Request;
 
 class ManualController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return ApiResponse::success(ManualResource::collection(Manual::all(), 'Manuals retrieved'));
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ManualResource::collection(Manual::all()), 'Manuals retrieved');
+        }
+        return ApiResponse::success(ManualDashResource::collection(Manual::all()), 'Manuals retrieved');
     }
 
     /**
@@ -42,13 +44,15 @@ class ManualController extends Controller
         return ApiResponse::success(ManualDashResource::make($manual, 'Manual created'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $manual = Manual::findOrFail($id);
-        return ApiResponse::success(ManualResource::make($manual, 'Manual retrieved'));
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ManualResource::make($manual), 'Manual retrieved');
+        }
+        return ApiResponse::success(ManualDashResource::make($manual), 'Manual retrieved');
     }
 
     /**

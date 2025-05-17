@@ -19,12 +19,15 @@ class TrainingController extends Controller
     {
         $this->fileUploaderService = $fileUploaderService;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return ApiResponse::success(TrainingResource::collection(Training::all()), 'Trainings retrieved');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(TrainingResource::collection(Training::all()), 'Trainings retrieved');
+        }
+        return ApiResponse::success(TrainingDashResource::collection(Training::all()), 'Trainings retrieved');
     }
 
     /**
@@ -55,13 +58,15 @@ class TrainingController extends Controller
         return ApiResponse::success(TrainingDashResource::make($training), 'Training created');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $training = Training::findOrFail($id);
-        return ApiResponse::success(TrainingResource::make($training), 'Training retrieved');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(TrainingResource::make($training), 'Training retrieved');
+        }
+        return ApiResponse::success(TrainingDashResource::make($training), 'Training retrieved');
     }
 
     /**

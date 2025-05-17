@@ -20,10 +20,31 @@ class HomeController extends Controller
         $this->fileUploaderService = $fileUploaderService;
     }
 
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(HomeResource::collection(Home::all()), 'Home pages retrieved successfully');
+        }
+        return ApiResponse::success(HomeDashResource::collection(Home::all()), 'Home pages retrieved successfully');
+    }
+
+    /**
+     * Display the specified resource.
+     */
     public function show($id)
     {
         $home = Home::findOrFail($id);
-        return ApiResponse::success(HomeResource::make($home), 'Home page content retrieved successfully');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(HomeResource::make($home), 'Home page content retrieved successfully');
+        }
+        return ApiResponse::success(HomeDashResource::make($home), 'Home page content retrieved successfully');
     }
 
     public function update(UpdateHomeRequest $request, $id)

@@ -19,12 +19,15 @@ class ProjectController extends Controller
     {
         $this->fileUploaderService = $fileUploaderService;
     }
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        return ApiResponse::success(ProjectResource::collection(Project::all()), 'Projects retrieved successfully');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ProjectResource::collection(Project::all()), 'Projects retrieved successfully');
+        }
+        return ApiResponse::success(ProjectDashResource::collection(Project::all()), 'Projects retrieved successfully');
     }
 
     /**
@@ -56,13 +59,15 @@ class ProjectController extends Controller
         return ApiResponse::success(ProjectDashResource::make($project), 'Project created successfully', 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $project = Project::findOrFail($id);
-        return ApiResponse::success(ProjectResource::make($project), 'Project retrieved successfully');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ProjectResource::make($project), 'Project retrieved successfully');
+        }
+        return ApiResponse::success(ProjectDashResource::make($project), 'Project retrieved successfully');
     }
 
     /**

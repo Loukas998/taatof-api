@@ -14,12 +14,14 @@ use LDAP\Result;
 
 class ResearchController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return ApiResponse::success(ResearchResource::collection(Research::all(), 'Research retrieved'));
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ResearchResource::collection(Research::all()), 'Research retrieved');
+        }
+        return ApiResponse::success(ResearchDashResource::collection(Research::all()), 'Research retrieved');
     }
 
     /**
@@ -37,13 +39,15 @@ class ResearchController extends Controller
         return ApiResponse::success(ResearchDashResource::make($research, 'Research created'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show($id)
     {
         $research = Research::findOrFail($id);
-        return ApiResponse::success(ResearchResource::make($research, 'Research retrieved'));
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(ResearchResource::make($research), 'Research retrieved');
+        }
+        return ApiResponse::success(ResearchDashResource::make($research), 'Research retrieved');
     }
 
     /**

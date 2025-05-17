@@ -24,7 +24,26 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(DepartmentResource::collection(Department::all()), 'Departments retrieved');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(DepartmentResource::collection(Department::all()), 'Departments retrieved');
+        }
+        return ApiResponse::success(DepartmentDashResource::collection(Department::all()), 'Departments retrieved');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show($id)
+    {
+        $department = Department::findOrFail($id);
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(DepartmentResource::make($department), 'Department retrieved');
+        }
+        return ApiResponse::success(DepartmentDashResource::make($department), 'Department retrieved');
     }
 
     /**
@@ -53,15 +72,6 @@ class DepartmentController extends Controller
         }
 
         return ApiResponse::success(DepartmentDashResource::make($department), 'Department created');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show($id)
-    {
-        $department = Department::findOrFail($id);
-        return ApiResponse::success(DepartmentResource::make($department), 'Department retrieved');
     }
 
     /**

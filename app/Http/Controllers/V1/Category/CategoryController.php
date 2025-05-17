@@ -24,7 +24,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(CategoryResource::collection(Category::all()), 'Categories retrieved');
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(CategoryResource::collection(Category::all()), 'Categories retrieved');
+        }
+        return ApiResponse::success(CategoryDashResource::collection(Category::all()), 'Categories retrieved');
     }
 
     /**
@@ -57,9 +62,15 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        return ApiResponse::success(CategoryResource::make($category), 'Category retrieved');
+        $category = Category::findOrFail($id);
+        $accept_language = request()->header('Accept-Language');
+        if($accept_language)
+        {
+            return ApiResponse::success(CategoryResource::make($category), 'Category retrieved');
+        }
+        return ApiResponse::success(CategoryDashResource::make($category), 'Category retrieved');
     }
 
     /**
