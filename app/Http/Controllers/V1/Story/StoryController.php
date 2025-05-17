@@ -199,4 +199,11 @@ class StoryController extends Controller
         $story->participant->notify(new UpdateStoryStatus());
         return ApiResponse::success(StoryResource::make($story), 'Story status updated successfully');
     }
+
+    public function getStoriesByParticipant()
+    {
+        $participantId = request()->query('participantId');
+        $stories = Story::where('user_id', $participantId)->get();
+        return ApiResponse::success(StoryResource::make($stories), 'Story status updated successfully');
+    }
 }
