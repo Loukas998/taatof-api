@@ -4,6 +4,7 @@ namespace App\Http\Controllers\V1\Training;
 
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
+use App\Http\Requests\V1\Training\BulkUpdateTrainingRequest;
 use App\Http\Requests\V1\Training\CreateTrainingRequest;
 use App\Http\Requests\V1\Training\UpdateTrainingRequest;
 use App\Http\Resources\V1\Training\TrainingDashResource;
@@ -94,6 +95,39 @@ class TrainingController extends Controller
         }
 
         return ApiResponse::success(TrainingDashResource::make($training), 'Training updated');
+    }
+
+    public function bulk_update(BulkUpdateTrainingRequest $request)
+    {
+        $data = $request->validated();
+        $trainings = $data['trainings'];
+        foreach($trainings as $trainingData)
+        {
+            $training = Training::updateOrCreate(
+                ['id' => $trainingData['id'] ?? null], // Find by ID if provided
+                [
+                    'title' => [
+                        'en' => $trainingData['title_en'],
+                        'ar' => $trainingData['title_ar'],
+                    ],
+                    'description' => [
+                        'en' => $trainingData['description_en'] ?? null,
+                        'ar' => $trainingData['description_ar'] ?? null,
+                    ],
+                    'location' => [
+                        'en' => $trainingData['location_en'] ?? null,
+                        'ar' => $trainingData['location_ar'] ?? null,
+                    ]
+                ]
+            );
+            if(isset($trainingData['image']))
+            {
+                $this->fileUploaderService->uploadSingleFile($training, $trainingData['image'], 'image');
+            }
+        }
+
+
+        return ApiResponse::success(TrainingDashResource::collection(Training::all()), 'Training updated');
     }
 
     /**

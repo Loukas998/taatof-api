@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Project\CreateProjectRequest;
 use App\Http\Requests\V1\Project\UpdateProjectRequest;
+use App\Http\Requests\V1\Project\BulkUpdateProjectRequest;
 use App\Http\Resources\V1\Project\ProjectDashResource;
 use App\Http\Resources\V1\Project\ProjectResource;
 use App\Models\Project\Project;
@@ -121,5 +122,41 @@ class ProjectController extends Controller
         $project->delete();
         
         return ApiResponse::success(null, 'Project deleted successfully');
+    }
+
+    public function bulk_update(BulkUpdateProjectRequest $request)
+    {
+        $data = $request->validated();
+        $projects = $data['projects'];
+        
+        foreach($projects as $projectData)
+        {
+            // Use updateOrCreate instead of findOrFail + update
+            $project = Project::updateOrCreate(
+                ['id' => $projectData['id'] ?? null], // Find by ID if provided
+                [
+                    'title' => [
+                        'en' => $projectData['title_en'],
+                        'ar' => $projectData['title_ar'],
+                    ],
+                    'home_description' => [
+                        'en' => $projectData['home_description_en'] ?? null,
+                        'ar' => $projectData['home_description_ar'] ?? null,
+                    ],
+                    'detailed_description' => [
+                        'en' => $projectData['detailed_description_en'] ?? null,
+                        'ar' => $projectData['detailed_description_ar'] ?? null,
+                    ]
+                ]
+            );
+            
+            if(isset($projectData['images']))
+            {
+                $this->fileUploaderService->uploadMultipleFiles($project, $projectData['images'], 'images');
+            }
+        }
+    
+        // Return only the updated/created projects
+        return ApiResponse::success(ProjectDashResource::collection(Project::all()), 'Projects updated');
     }
 }

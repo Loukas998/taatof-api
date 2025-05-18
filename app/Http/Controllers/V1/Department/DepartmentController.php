@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Department\CreateDepartmentRequest;
 use App\Http\Requests\V1\Department\UpdateDepartmentRequest;
+use App\Http\Requests\V1\Department\BulkUpdateDepartmentRequest;
 use App\Http\Resources\V1\Department\DepartmentDashResource;
 use App\Http\Resources\V1\Department\DepartmentResource;
 use App\Models\Department\Department;
@@ -121,5 +122,40 @@ class DepartmentController extends Controller
         $department = Department::findOrFail($id);
         $department->delete();
         return ApiResponse::success(null, 'Department deleted');
+    }
+
+    public function bulk_update(BulkUpdateDepartmentRequest $request)
+    {
+        $data = $request->validated();
+        $departments = $data['departments'];
+        
+        foreach($departments as $departmentData)
+        {
+            $department = Department::updateOrCreate(
+                ['id' => $departmentData['id'] ?? null], // Find by ID if provided
+                [
+                    'title' => [
+                        'en' => $departmentData['title_en'],
+                        'ar' => $departmentData['title_ar'],
+                    ],
+                    'description' => [
+                        'en' => $departmentData['description_en'] ?? null,
+                        'ar' => $departmentData['description_ar'] ?? null,
+                    ],
+                    'groups_number' => $departmentData['groups_number'] ?? null,
+                    'participants_number' => $departmentData['participants_number'] ?? null
+                ]
+            );
+            
+            if(isset($departmentData['images']))
+            {
+                $this->fileUploaderService->uploadMultipleFiles($department, $departmentData['images'], 'images');
+            }
+        }
+    
+        // Return only the updated/created departments
+        return ApiResponse::success(
+            DepartmentDashResource::collection(Department::all()), 'Departments updated'
+        );
     }
 }

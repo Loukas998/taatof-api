@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Research\CreateResearchRequest;
 use App\Http\Requests\V1\Research\UpdateResearchRequest;
+use App\Http\Requests\V1\Research\BulkUpdateResearchRequest;
 use App\Http\Resources\V1\Research\ResearchDashResource;
 use App\Http\Resources\V1\Research\ResearchResource;
 use App\Models\Research\Research;
@@ -74,5 +75,29 @@ class ResearchController extends Controller
         $research = Research::findOrFail($id);
         $research->delete();
         return ApiResponse::success(null, 'Research retrieved');
+    }
+
+    public function bulk_update(BulkUpdateResearchRequest $request)
+    {
+        $data = $request->validated();
+        $researches = $data['researches'];
+        $updatedResearches = [];
+        foreach($researches as $researchData)
+        {
+            // Use updateOrCreate instead of findOrFail + update
+            $research = Research::updateOrCreate(
+                ['id' => $researchData['id'] ?? null], // Find by ID if provided
+                [
+                    'title' => [
+                        'en' => $researchData['title_en'],
+                        'ar' => $researchData['title_ar'],
+                    ]
+                ]
+            );
+        }
+
+        // Return only the updated/created researches
+        return ApiResponse::success(
+            ResearchDashResource::collection(Research::all()), 'Researches updated');
     }
 }

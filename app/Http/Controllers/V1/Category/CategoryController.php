@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Category\CreateCategoryRequest;
 use App\Http\Requests\V1\Category\UpdateCategoryRequest;
+use App\Http\Requests\V1\Category\BulkUpdateCategoryRequest;
 use App\Http\Resources\V1\Category\CategoryDashResource;
 use App\Http\Resources\V1\Category\CategoryResource;
 use App\Models\Category\Category;
@@ -113,5 +114,36 @@ class CategoryController extends Controller
         $category->delete();
         
         return ApiResponse::success(null, 'Category deleted successfully');
+    }
+
+    public function bulk_update(BulkUpdateCategoryRequest $request)
+    {
+        $data = $request->validated();
+        $categories = $data['categories'];
+        
+        foreach($categories as $categoryData)
+        {
+            $category = Category::updateOrCreate(
+                ['id' => $categoryData['id'] ?? null], // Find by ID if provided
+                [
+                    'project_id' => $categoryData['project_id'],
+                    'name' => [
+                        'en' => $categoryData['name_en'],
+                        'ar' => $categoryData['name_ar'],
+                    ],
+                    'description' => [
+                        'en' => $categoryData['description_en'] ?? null,
+                        'ar' => $categoryData['description_ar'] ?? null,
+                    ]
+                ]
+            );
+            
+            if(isset($categoryData['image']))
+            {
+                $this->fileUploaderService->uploadSingleFile($category, $categoryData['image'], 'image');
+            }
+        }
+    
+        return ApiResponse::success(CategoryDashResource::collection(Category::all()), 'Categories updated');
     }
 }

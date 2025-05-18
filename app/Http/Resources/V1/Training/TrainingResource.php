@@ -18,6 +18,7 @@ class TrainingResource extends JsonResource
             'id'          => $this->id,
             'title'       => $this->getTranslation('title', app()->getLocale()),
             'description' => $this->getTranslation('description', app()->getLocale()),
+            'location'    => $this->getTranslation('location', app()->getLocale()),
             'image'       => $this->getFirstMediaUrl('image'),
         ];
     }

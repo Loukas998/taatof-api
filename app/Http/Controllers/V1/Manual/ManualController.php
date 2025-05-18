@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Manual\CreateManualRequest;
 use App\Http\Requests\V1\Manual\UpdateManualRequest;
+use App\Http\Requests\V1\Manual\BulkUpdateManualRequest;
 use App\Http\Resources\V1\Manual\ManualDashResource;
 use App\Http\Resources\V1\Manual\ManualResource;
 use App\Models\Manual\Manual;
@@ -83,5 +84,30 @@ class ManualController extends Controller
         $manual = Manual::findOrFail($id);
         $manual->deleted();
         return ApiResponse::success(null, 'Manual updated');
+    }
+
+    public function bulk_update(BulkUpdateManualRequest $request)
+    {
+        $data = $request->validated();
+        $manuals = $data['manuals'];
+        
+        foreach($manuals as $manualData)
+        {
+            $manual = Manual::updateOrCreate(
+                ['id' => $manualData['id'] ?? null], // Find by ID if provided
+                [
+                    'title' => [
+                        'en' => $manualData['title_en'],
+                        'ar' => $manualData['title_ar'],
+                    ],
+                    'description' => [
+                        'en' => $manualData['description_en'] ?? null,
+                        'ar' => $manualData['description_ar'] ?? null,
+                    ]
+                ]
+            );
+        }
+    
+        return ApiResponse::success(ManualDashResource::collection(Manual::all()), 'Manuals updated');
     }
 }
