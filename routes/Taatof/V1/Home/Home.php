@@ -8,4 +8,4 @@ Route::apiResource('home', HomeController::class)
     ->middleware(['auth:sanctum', 'role:admin,media']);
 
 Route::apiResource('home', HomeController::class)
-    ->only(['show']);
+    ->only(['index']);

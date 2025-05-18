@@ -22,7 +22,8 @@ class AuthController extends Controller
             
             return ApiResponse::success([
                 'token' => $token,
-                'token_type' => 'Bearer'
+                'token_type' => 'Bearer',
+                'role' => $user->role
             ], 'User logged in successfully');
         }
         

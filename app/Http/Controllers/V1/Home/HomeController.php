@@ -25,12 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $home = Home::findOrFail(1);
         $accept_language = request()->header('Accept-Language');
         if($accept_language)
         {
-            return ApiResponse::success(HomeResource::collection(Home::all()), 'Home pages retrieved successfully');
+            return ApiResponse::success(HomeResource::make($home), 'Home pages retrieved successfully');
         }
-        return ApiResponse::success(HomeDashResource::collection(Home::all()), 'Home pages retrieved successfully');
+        return ApiResponse::success(HomeDashResource::make($home), 'Home pages retrieved successfully');
     }
 
     /**
