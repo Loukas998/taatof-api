@@ -48,10 +48,10 @@ class HomeController extends Controller
         return ApiResponse::success(HomeDashResource::make($home), 'Home page content retrieved successfully');
     }
 
-    public function update(UpdateHomeRequest $request, $id)
+    public function update(UpdateHomeRequest $request)
     {
         $data = $request->validated();
-        $home = Home::findOrFail($id);
+        $home = Home::findOrFail(1);
         $home->update([
             'title'               => [
                 'en' => $data['title_en'] ?? $home->getTranslation('title', 'en', false),

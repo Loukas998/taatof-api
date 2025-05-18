@@ -15,10 +15,12 @@ class CategoryDashResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'         => $this->id,
-            'name_en'    => $this->getTranslation('name', 'en'),
-            'name_ar'    => $this->getTranslation('name', 'ar'),
-            'project_id' => $this->project_id
+            'id'             => $this->id,
+            'name_en'        => $this->getTranslation('name', 'en'),
+            'name_ar'        => $this->getTranslation('name', 'ar'),
+            'description_en' => $this->getTranslation('description', 'en'),
+            'description_ar' => $this->getTranslation('description', 'ar'),
+            'project_id'     => $this->project_id
         ];
     }
 }
