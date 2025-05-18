@@ -23,7 +23,7 @@ class BulkUpdateProjectRequest extends FormRequest
     {
         return [
             'projects'                                => 'required|array',
-            'projects.*.id'                           => 'required|integer|exists:projects,id',
+            'projects.*.id'                           => 'nullable|integer|exists:projects,id',
             'projects.*.title_en'                     => 'required|string|max:255',
             'projects.*.title_ar'                     => 'required|string|max:255',
             'projects.*.home_description_en'          => 'nullable|string',

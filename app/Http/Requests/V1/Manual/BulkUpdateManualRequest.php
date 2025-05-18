@@ -23,7 +23,7 @@ class BulkUpdateManualRequest extends FormRequest
     {
         return [
            'manuals'                  => 'array|required',
-           'manuals.*.id'             => 'required|integer|exists:manuals,id',
+           'manuals.*.id'             => 'nullable|integer|exists:manuals,id',
            'manuals.*.title_ar'       => 'required|string|max:255',
            'manuals.*.title_en'       => 'required|string|max:255',
            'manuals.*.description_ar' => 'nullable|string',

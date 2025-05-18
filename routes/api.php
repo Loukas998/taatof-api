@@ -21,7 +21,7 @@ Route::prefix('v1')->group(function () use ($dev_path) {
 });
 
 Route::post('login', [AuthController::class, 'login']);
-Route::delete('logout', [AuthController::class, 'logout']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 Route::get('users/notifications', function () {
     $notifications = auth('sanctum')->user()->unreadNotifications;
