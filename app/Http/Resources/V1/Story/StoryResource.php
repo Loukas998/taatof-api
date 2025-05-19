@@ -18,6 +18,7 @@ class StoryResource extends JsonResource
             'id'                 => $this->id,
             'user_id'            => $this->user_id,
             'state_id'           => $this->state_id,
+            'state'              => $this->state->name,
             'participant_name'   => $this->participant->first_name . ' ' . $this->participant->last_name,
             'title'              => $this->title,
             'date_of_submitting' => $this->date_of_submitting,
