@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\User\CreateUserRequest;
 use App\Http\Requests\V1\User\UpdateUserRequest;
+use App\Http\Resources\V1\User\AuthorsResource;
 use App\Http\Resources\V1\User\UserResource;
 use App\Models\User\User;
 use Illuminate\Http\Request;
@@ -78,6 +79,6 @@ class UserController extends Controller
     public function getParticipants()
     {
         $participants = User::where('role', 'participant')->get();
-        return ApiResponse::success($participants, 'Participants retrieved successfully');
+        return ApiResponse::success(AuthorsResource::collection($participants), 'Participants retrieved successfully');
     }
 }
