@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->date('date_of_submitting')->nullable();
             $table->text('note')->nullable();
+            $table->integer('views')->nullable();
             $table->enum('status', ['pending', 'accepted', 'rejected'])->nullable()->default('pending');
             $table->timestamps();
 
