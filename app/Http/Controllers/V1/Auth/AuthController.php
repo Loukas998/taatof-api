@@ -5,6 +5,7 @@ namespace App\Http\Controllers\V1\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\ApiResponse;
 use App\Http\Requests\V1\Auth\LoginRequest;
+use App\Http\Resources\V1\User\UserResource;
 use App\Models\User\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,7 +24,7 @@ class AuthController extends Controller
             return ApiResponse::success([
                 'token' => $token,
                 'token_type' => 'Bearer',
-                'role' => $user->role
+                'user' => UserResource::make($user)
             ], 'User logged in successfully');
         }
         
