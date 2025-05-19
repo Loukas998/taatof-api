@@ -19,7 +19,7 @@ Route::apiResource('stories', StoryController::class)
 
 Route::apiResource('stories', StoryController::class)
     ->only(['store', 'delete'])
-    ->middleware(['auth:sanctum', 'role:participant']);
+    ->middleware(['auth:sanctum', 'role:participant,admin']);
 
 Route::apiResource('stories', StoryController::class)
     ->only(['index', 'show']);
