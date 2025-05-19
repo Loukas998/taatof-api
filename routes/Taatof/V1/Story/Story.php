@@ -22,3 +22,5 @@ Route::apiResource('stories', StoryController::class)
 
 Route::apiResource('stories', StoryController::class)
     ->only(['index', 'show']);
+
+Route::get('stories/my-participants-stories', [StoryController::class, 'getMyParticipantStories'])->middleware(['auth:sanctum', 'role:auditor']);

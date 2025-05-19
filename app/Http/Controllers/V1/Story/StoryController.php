@@ -206,4 +206,13 @@ class StoryController extends Controller
         $stories = Story::where('user_id', $participantId)->get();
         return ApiResponse::success(StoryResource::make($stories), 'Story status updated successfully');
     }
+
+    public function getMyParticipantStories()
+    {
+        $user = auth('sanctum')->user();
+        $stories = Story::whereHas('participant', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+        })->get();
+        return ApiResponse::success(StoryResource::collection($stories), 'Participants stories retrieved successfully');
+    }
 }
