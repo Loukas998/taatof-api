@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('stories/by-category', [StoryController::class, 'getStoriesByCategory']);
 Route::get('stories/by-state', [StoryController::class, 'getStoriesByState']);
 Route::get('stories/by-participant', [StoryController::class, 'getStoriesByParticipant']);
+Route::get('stories/my-participants-stories', [StoryController::class, 'getMyParticipantStories'])->middleware(['auth:sanctum', 'role:auditor']);
 
 Route::get('stories/participant-stories', [StoryController::class, 'getParticipantStories'])->middleware(['auth:sanctum', 'role:participant']);
 
@@ -22,5 +23,3 @@ Route::apiResource('stories', StoryController::class)
 
 Route::apiResource('stories', StoryController::class)
     ->only(['index', 'show']);
-
-Route::get('stories/my-participants-stories', [StoryController::class, 'getMyParticipantStories'])->middleware(['auth:sanctum', 'role:auditor']);
