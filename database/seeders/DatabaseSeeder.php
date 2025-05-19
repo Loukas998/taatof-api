@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Database\Seeders\Category\CategorySeeder;
+use Database\Seeders\ContactUs\ContactUsSeeder;
 use Database\Seeders\Home\HomeSeeder;
 use Database\Seeders\Project\ProjectSeeder;
 use Database\Seeders\State\StateSeeder;
@@ -23,7 +24,8 @@ class DatabaseSeeder extends Seeder
             ProjectSeeder::class,
             CategorySeeder::class,
             HomeSeeder::class,
-            UserSeeder::class
+            UserSeeder::class,
+            ContactUsSeeder::class
         ]);
     }
 }

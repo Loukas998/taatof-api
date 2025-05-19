@@ -14,9 +14,9 @@ class ContactUsSeeder extends Seeder
     public function run(): void
     {
         ContactUs::create([
-            'email' => '',
+            'email'        => 'complaintsnvc@gmail.com',
             'phone_number' => '+963 11 331 9073',
-            'location' => [
+            'location'     => [
                 'en' => 'Al Jesr Al Abiad - Dammam - Syria',
                 'ar' => 'الجسر الأبيض - دمشق - سورية'
             ]
