@@ -75,9 +75,9 @@ class UserController extends Controller
         return ApiResponse::success($participants, 'Participants retrieved successfully');
     }
 
-    public function getAuthors()
+    public function getParticipants()
     {
-        $authors = User::where('role', 'author')->get();
-        return ApiResponse::success($authors, 'Authors retrieved successfully');
+        $participants = User::where('role', 'participant')->get();
+        return ApiResponse::success($participants, 'Participants retrieved successfully');
     }
 }

@@ -25,6 +25,7 @@ class StoryResource extends JsonResource
             'status'             => $this->status,
             'views'              => $this->views,
             'summary'            => $this->when($this->blogStory, $this->blogStory->summary),
+            'image'              => $this->when($this->blogStory, $this->blogStory->getFirstMediaUrl('image')),
             'blog'               => BlogStoryResource::make($this->whenLoaded('blogStory'), $this->blogStory),
             'vlog'               => VlogStoryResource::make($this->whenLoaded('vlogStory'), $this->vlogStory),
         ];
