@@ -18,11 +18,13 @@ class StoryResource extends JsonResource
             'id'                 => $this->id,
             'user_id'            => $this->user_id,
             'state_id'           => $this->state_id,
+            'participant_name'   => $this->participant->first_name . ' ' . $this->participant->last_name,
             'title'              => $this->title,
             'date_of_submitting' => $this->date_of_submitting,
             'note'               => $this->note,
             'status'             => $this->status,
             'views'              => $this->views,
+            'summary'            => $this->when($this->blogStory, $this->blogStory->summary),
             'blog'               => BlogStoryResource::make($this->whenLoaded('blogStory'), $this->blogStory),
             'vlog'               => VlogStoryResource::make($this->whenLoaded('vlogStory'), $this->vlogStory),
         ];
