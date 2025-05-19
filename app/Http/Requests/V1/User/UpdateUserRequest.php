@@ -22,8 +22,8 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'auditor_id'   => 'nullable|integer|unique:users,auditor_id',
-            'project_id'   => 'nullable|integer|unique:projects,id',   
+            'auditor_id'   => 'nullable|integer|exists:users,auditor_id',
+            'project_id'   => 'nullable|integer|exists:projects,id',   
             'first_name'   => 'required|string|max:255',
             'middle_name'  => 'nullable|string|max:255',
             'last_name'    => 'required|string|max:255',
