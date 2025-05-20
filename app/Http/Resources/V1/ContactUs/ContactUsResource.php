@@ -19,6 +19,9 @@ class ContactUsResource extends JsonResource
             'email'        => $this->email,
             'phone_number' => $this->phone_number,
             'location'     => $this->getTranslation('location', app()->getLocale()),
+            'facebook'     => $this->facebook,
+            'instagram'    => $this->instagram,
+            'linkedin'     => ''
         ];
     }
 }

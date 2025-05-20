@@ -24,13 +24,13 @@ class UpdateUserRequest extends FormRequest
         return [
             'auditor_id'   => 'nullable|integer|exists:users,auditor_id',
             'project_id'   => 'nullable|integer|exists:projects,id',   
-            'first_name'   => 'required|string|max:255',
+            'first_name'   => 'nullable|string|max:255',
             'middle_name'  => 'nullable|string|max:255',
-            'last_name'    => 'required|string|max:255',
-            'email'        => 'required|email|max:255|unique:users,email',
+            'last_name'    => 'nullable|string|max:255',
+            'email'        => 'nullable|email|max:255|unique:users,email',
             'phone_number' => 'nullable|string|max:255',
-            'password'     => 'required|string|max:255',
-            'role'         => 'required|string|in:admin,auditor,media,participant',
+            'password'     => 'nullable|string|max:255',
+            'role'         => 'nullable|string|in:admin,auditor,media,participant',
         ];
     }
 }

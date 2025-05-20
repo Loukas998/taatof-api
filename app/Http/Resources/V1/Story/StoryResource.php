@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\V1\Story;
 
+use App\Http\Resources\V1\Category\CategoryResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -29,6 +30,7 @@ class StoryResource extends JsonResource
             'image'              => $this->when($this->blogStory, $this->blogStory->getFirstMediaUrl('image')),
             'blog'               => BlogStoryResource::make($this->whenLoaded('blogStory'), $this->blogStory),
             'vlog'               => VlogStoryResource::make($this->whenLoaded('vlogStory'), $this->vlogStory),
+            'categories'         => CategoryResource::collection($this->whenLoaded('categories'), $this->categories)
         ];
     }
 }

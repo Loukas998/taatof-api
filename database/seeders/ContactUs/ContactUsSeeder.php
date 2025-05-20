@@ -19,7 +19,9 @@ class ContactUsSeeder extends Seeder
             'location'     => [
                 'en' => 'Al Jesr Al Abiad - Dammam - Syria',
                 'ar' => 'الجسر الأبيض - دمشق - سورية'
-            ]
+            ],
+            'facebook' => 'https://www.facebook.com/share/1EtBKPQLZx/',
+            'instagram' => 'https://www.instagram.com/nvcsyria?igsh=Z3RxbXNhdmo1ZjJy'
         ]);
     }
 }

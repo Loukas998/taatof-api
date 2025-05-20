@@ -45,10 +45,21 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, $id)
     {
         $data = $request->validated();
-        $user->update($data);
+        $user = User::findOrFail($id);
+        $user->update([
+            'auditor_id'   => $data['auditor_id'] ?? $user->auditor_id,
+            'project_id'   => $data['project_id'] ?? $user->project_id,
+            'first_name'   => $data['first_name'] ?? $user->first_name,
+            'middle_name'  => $data['middle_name'] ?? $user->middle_name,
+            'last_name'    => $data['last_name'] ?? $user->last_name,
+            'email'        => $data['email'] ?? $user->email,
+            'phone_number' => $data['phone_number'] ?? $user->phone_number,
+            'password'     => $data['password'] ?? $user->password,
+            'role'         => $data['role'] ?? $user->role,
+        ]);
         return ApiResponse::success(UserResource::make($user), 'User updated successfully');
     }
 
