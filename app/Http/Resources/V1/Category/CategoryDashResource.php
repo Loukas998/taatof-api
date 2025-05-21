@@ -20,7 +20,8 @@ class CategoryDashResource extends JsonResource
             'name_ar'        => $this->getTranslation('name', 'ar'),
             'description_en' => $this->getTranslation('description', 'en'),
             'description_ar' => $this->getTranslation('description', 'ar'),
-            'project_id'     => $this->project_id
+            'project_id'     => $this->project_id,
+            'image'          => $this->getFirstMediaUrl('image'),
         ];
     }
 }

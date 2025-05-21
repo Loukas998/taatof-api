@@ -140,6 +140,7 @@ class CategoryController extends Controller
             
             if(isset($categoryData['image']))
             {
+                $this->fileUploaderService->clearCollection($category, 'image');
                 $this->fileUploaderService->uploadSingleFile($category, $categoryData['image'], 'image');
             }
         }
