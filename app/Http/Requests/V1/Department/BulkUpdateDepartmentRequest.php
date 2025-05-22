@@ -22,19 +22,19 @@ class BulkUpdateDepartmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'projects'                                  => 'required|array',
-            'projects.*.id'                             => 'nullable|integer|exists:departments,id',
-            'projects.*.title_en'                       => 'required|string',
-            'projects.*.title_ar'                       => 'required|string',
-            'projects.*.description_en'                 => 'required|string',
-            'projects.*.description_ar'                 => 'required|string',
-            'projects.*.participants_number'            => 'nullable|integer',
-            'projects.*.groups_number'                  => 'nullable|integer',
-            'projects.*.images'                         => 'nullable|array',
-            'projects.*.images.*'                       => 'mimes:jpg,png,jpeg,gif,svg',
-            'projects.*.image_replacements'             => 'nullable|array',
-            'projects.*.image_replacements.*.id'        => 'integer|exists:media,id',
-            'projects.*.image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',
+            'departments'                                  => 'required|array',
+            'departments.*.id'                             => 'nullable|integer|exists:departments,id',
+            'departments.*.title_en'                       => 'required|string',
+            'departments.*.title_ar'                       => 'required|string',
+            'departments.*.description_en'                 => 'required|string',
+            'departments.*.description_ar'                 => 'required|string',
+            'departments.*.participants_number'            => 'nullable|integer',
+            'departments.*.groups_number'                  => 'nullable|integer',
+            'departments.*.images'                         => 'nullable|array',
+            'departments.*.images.*'                       => 'mimes:jpg,png,jpeg,gif,svg',
+            'departments.*.image_replacements'             => 'nullable|array',
+            'departments.*.image_replacements.*.id'        => 'integer|exists:media,id',
+            'departments.*.image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',
         ];
     }
 }

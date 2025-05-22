@@ -149,7 +149,16 @@ class DepartmentController extends Controller
             
             if(isset($departmentData['images']))
             {
+                $this->fileUploaderService->clearCollection($department, 'images');
                 $this->fileUploaderService->uploadMultipleFiles($department, $departmentData['images'], 'images');
+            }
+
+            if(isset($departmentData['image_replacements']))
+            {
+                foreach($departmentData['image_replacements'] as $image)
+                {
+                    $this->fileUploaderService->replaceFile($department, $image['new_image'], $image['id'], 'images');
+                }
             }
         }
     

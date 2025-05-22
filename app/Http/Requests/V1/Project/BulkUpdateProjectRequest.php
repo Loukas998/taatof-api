@@ -22,19 +22,19 @@ class BulkUpdateProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'projects'                                => 'required|array',
-            'projects.*.id'                           => 'nullable|integer|exists:projects,id',
-            'projects.*.title_en'                     => 'required|string|max:255',
-            'projects.*.title_ar'                     => 'required|string|max:255',
-            'projects.*.home_description_en'          => 'nullable|string',
-            'projects.*.home_description_ar'          => 'nullable|string',
-            'projects.*.detailed_description_en'      => 'nullable|string',
-            'projects.*.detailed_description_ar'      => 'nullable|string',
-            'projects.images'                         => 'nullable|array',
-            'projects.images.*'                       => 'image|mimes:jpeg,png,jpg,gif,svg',
-            'projects.image_replacements'             => 'nullable|array',
-            'projects.image_replacements.*.id'        => 'integer|exists:media,id',
-            'projects.image_replacements.*.new_image' => 'mimes:jpg,png,jpeg,gif,svg',
+            'projects'                                  => 'required|array',
+            'projects.*.id'                             => 'nullable|integer|exists:projects,id',
+            'projects.*.title_en'                       => 'required|string|max:255',
+            'projects.*.title_ar'                       => 'required|string|max:255',
+            'projects.*.home_description_en'            => 'nullable|string',
+            'projects.*.home_description_ar'            => 'nullable|string',
+            'projects.*.detailed_description_en'        => 'nullable|string',
+            'projects.*.detailed_description_ar'        => 'nullable|string',
+            'projects.*.images'                         => 'nullable|array',
+            'projects.*.images.*'                       => 'image|mimes:jpeg,png,jpg,gif,svg',
+            'projects.*.image_replacements'             => 'nullable|array',
+            'projects.*.image_replacements.*.id'        => 'integer|exists:media,id',
+            'projects.*.image_replacements.*.new_image' => 'image|mimes:jpg,png,jpeg,gif,svg',
         ];
     }
 }

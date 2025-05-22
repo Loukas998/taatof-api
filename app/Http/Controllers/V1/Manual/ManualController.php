@@ -90,10 +90,9 @@ class ManualController extends Controller
     {
         $data = $request->validated();
         $manuals = $data['manuals'];
-        
         foreach($manuals as $manualData)
         {
-            $manual = Manual::updateOrCreate(
+            Manual::updateOrCreate(
                 ['id' => $manualData['id'] ?? null], // Find by ID if provided
                 [
                     'title' => [

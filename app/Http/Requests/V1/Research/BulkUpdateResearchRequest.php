@@ -22,10 +22,10 @@ class BulkUpdateResearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'research'            => 'required|array',
-            'research.*.id'       => 'nullable|integer|exists:researches,id',
-            'research.*.title_en' => 'required|string',
-            'research.*.title_ar' => 'required|string'
+            'researches'            => 'required|array',
+            'researches.*.id'       => 'nullable|integer|exists:research,id',
+            'researches.*.title_en' => 'required|string',
+            'researches.*.title_ar' => 'required|string'
         ];
     }
 }

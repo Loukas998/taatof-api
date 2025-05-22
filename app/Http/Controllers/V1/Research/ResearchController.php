@@ -81,12 +81,11 @@ class ResearchController extends Controller
     {
         $data = $request->validated();
         $researches = $data['researches'];
-        $updatedResearches = [];
         foreach($researches as $researchData)
         {
             // Use updateOrCreate instead of findOrFail + update
-            $research = Research::updateOrCreate(
-                ['id' => $researchData['id'] ?? null], // Find by ID if provided
+            Research::updateOrCreate(
+                ['id' => $researchData['id'] ?? null],
                 [
                     'title' => [
                         'en' => $researchData['title_en'],

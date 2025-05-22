@@ -152,7 +152,16 @@ class ProjectController extends Controller
             
             if(isset($projectData['images']))
             {
+                $this->fileUploaderService->clearCollection($project, 'images');
                 $this->fileUploaderService->uploadMultipleFiles($project, $projectData['images'], 'images');
+            }
+
+            if(isset($projectData['image_replacements']))
+            {
+                foreach($projectData['image_replacements'] as $image)
+                {
+                    $this->fileUploaderService->replaceFile($project, $image['new_image'], $image['id'], 'images');
+                }
             }
         }
     
