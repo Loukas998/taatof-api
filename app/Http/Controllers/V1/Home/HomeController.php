@@ -27,7 +27,7 @@ class HomeController extends Controller
     {
         $home = Home::findOrFail(1);
         $accept_language = request()->header('Accept-Language');
-        if($accept_language)
+        if($accept_language && $accept_language === 'en' && $accept_language === 'ar')
         {
             return ApiResponse::success(HomeResource::make($home), 'Home pages retrieved successfully');
         }

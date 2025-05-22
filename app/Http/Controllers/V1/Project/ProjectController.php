@@ -24,7 +24,7 @@ class ProjectController extends Controller
     public function index()
     {
         $accept_language = request()->header('Accept-Language');
-        if($accept_language)
+        if($accept_language && $accept_language === 'en' && $accept_language === 'ar')
         {
             return ApiResponse::success(ProjectResource::collection(Project::all()), 'Projects retrieved successfully');
         }
