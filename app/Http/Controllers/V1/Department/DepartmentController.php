@@ -40,7 +40,7 @@ class DepartmentController extends Controller
     {
         $department = Department::findOrFail($id);
         $accept_language = request()->header('Accept-Language');
-        if($accept_language)
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(DepartmentResource::make($department), 'Department retrieved');
         }
