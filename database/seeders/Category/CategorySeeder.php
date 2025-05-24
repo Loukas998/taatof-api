@@ -115,9 +115,15 @@ and reviving human connections.',
             [
                 'project_id'  => 1,
                 'name'        => [
-                    'en' => '',
+                    'en' => 'Spirituality for the Promotion of Peace',
                     'ar' => 'الروحانية لتعزيز السلام'
                 ],
+                'description' => [
+                    'en' => 'Experiences of individuals and communities rooted in spiritual values based on compassion, empathy, and forgiveness foster a sense of security and meaning. These values are manifested through actions that enhance empathy, cohesion, and peace.',
+                    'ar' => 'ابراز دور القيم الروحية والممارسات التأملية في تعزيز السلام الداخلي والخارجي 
+تجارب الافراد والمجتمعات ، المستندة الى قيم روحانية قائمة على الرحمة والتعاطف والتسامح . 
+تشبع الأمان والمعنى وتتجسد بأفعال تعزز التعاطف والتماسك والسلام.',
+                ]
             ],
         ];
 
