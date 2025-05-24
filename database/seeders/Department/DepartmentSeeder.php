@@ -19,7 +19,7 @@ class DepartmentSeeder extends Seeder
                 'ar' => 'مجموعات الحياة'
                 ],
                 'description' => [
-                    'en' => ' Life groups are one of the strategies for achieving the vision of TAATOF Foundation in 
+                    'en' => 'Life groups are one of the strategies for achieving the vision of TAATOF Foundation in 
 working towards the formation and empowerment of peace incubators in several 
 governorates and regions to provide a safe environment, in which violent behaviors 
 decrease, and their members communicate in empathic language, in line with the non
@@ -28,6 +28,19 @@ violence and peacebuilding approach.',
                 ],
                 'participants_number' => 225,
                 'groups_number' => 16,
+            ],
+            [
+                'title' => [
+                'en' => ' Psychological Counseling Department',
+                'ar' => 'قسم الاستشارات النفسية'
+                ],
+                'description' => [
+                    'en' => 'The Psychological Counseling Department offers support to individuals who request it or are 
+            referred by other institutions. Each case receives personalized attention.',
+                    'ar' => 'يقدم قسم الاستشارات الدعم للأفراد والجماعات الذين يطلبونه أو يتم تحويلهم من مؤسسات أخرى. وتحظى كل حالة بعناية فردية خاصة.'
+                ],
+                'participants_number' => 0,
+                'groups_number' => 0,
             ],
             [
                 'title' => [
@@ -59,19 +72,6 @@ and facilitate an informed public discourse.',
                 'groups_number' => 0,
             ],
 
-            [
-                'title' => [
-                'en' => ' Psychological Counseling Department',
-                'ar' => 'قسم الاستشارات النفسية'
-                ],
-                'description' => [
-                    'en' => 'The Psychological Counseling Department offers support to individuals who request it or are 
-referred by other institutions. Each case receives personalized attention.',
-                    'ar' => 'يقدم قسم الاستشارات الدعم للأفراد والجماعات الذين يطلبونه أو يتم تحويلهم من مؤسسات أخرى. وتحظى كل حالة بعناية فردية خاصة.'
-                ],
-                'participants_number' => 0,
-                'groups_number' => 0,
-            ],
             
         ];
 

@@ -93,7 +93,7 @@ responses.',
             [
                 'title' => [
                     'en' => 'How to Empathize with Others Workshop',
-                    'ar' => '',
+                    'ar' => 'ورشة عمل حول كيفية التعاطف مع الآخرين',
                 ],
                 'description' => [
                     'en' => 'Emphasizing the importance of empathy, this workshop trains participants on empathic 

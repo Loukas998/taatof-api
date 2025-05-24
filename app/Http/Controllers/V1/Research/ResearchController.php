@@ -18,7 +18,7 @@ class ResearchController extends Controller
     public function index()
     {
         $accept_language = request()->header('Accept-Language');
-        if($accept_language && $accept_language === 'en' && $accept_language === 'ar')
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(ResearchResource::collection(Research::all()), 'Research retrieved');
         }
@@ -44,7 +44,7 @@ class ResearchController extends Controller
     {
         $research = Research::findOrFail($id);
         $accept_language = request()->header('Accept-Language');
-        if($accept_language)
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(ResearchResource::make($research), 'Research retrieved');
         }

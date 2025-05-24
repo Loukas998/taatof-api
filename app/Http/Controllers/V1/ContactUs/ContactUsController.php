@@ -16,7 +16,7 @@ class ContactUsController extends Controller
     {
         $contactUs = ContactUs::where('id', 1)->first();
         $accept_language = request()->header('Accept-Language');
-        if($accept_language && $accept_language === 'en' && $accept_language === 'ar')
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(ContactUsResource::make($contactUs), 'Contact Us retrieved');
         }

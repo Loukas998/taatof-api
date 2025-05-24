@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function index()
     {
         $accept_language = request()->header('Accept-Language');
-        if($accept_language && $accept_language === 'en' && $accept_language === 'ar')
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(CategoryResource::collection(Category::all()), 'Categories retrieved');
         }
@@ -67,7 +67,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $accept_language = request()->header('Accept-Language');
-        if($accept_language)
+        if($accept_language && ($accept_language === 'en' || $accept_language === 'ar'))
         {
             return ApiResponse::success(CategoryResource::make($category), 'Category retrieved');
         }
