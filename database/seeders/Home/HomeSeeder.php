@@ -16,11 +16,11 @@ class HomeSeeder extends Seeder
         Home::create([
             'title'               => [
                 'en' => 'Spreading the Pillars of Nonviolent Communication',
-                'ar' => ''
+                'ar' => 'نشر أسس التواصل اللاعنفي'
             ],
             'subtitle'            => [
                 'en' => 'Building bridges through empathy, understanding, and authentic expression. Our foundation is dedicated to creating a more peaceful world through compassionate communication.',
-                'ar' => ''
+                'ar' => 'بناء الجسور من خلال التعاطف، الفهم، اوالتعبير الصادق. مؤسستنا مكرسة لخلق عالم أكثر سلاماً من خلال التواصل اللاعنفي'
             ],
             'trainings_number'    => 40,
             'trainers_number'     => 800,
