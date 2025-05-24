@@ -5,9 +5,12 @@ namespace Database\Seeders;
 use App\Models\User;
 use Database\Seeders\Category\CategorySeeder;
 use Database\Seeders\ContactUs\ContactUsSeeder;
+use Database\Seeders\Department\DepartmentSeeder;
 use Database\Seeders\Home\HomeSeeder;
+use Database\Seeders\Manual\ManualSeeder;
 use Database\Seeders\Project\ProjectSeeder;
 use Database\Seeders\State\StateSeeder;
+use Database\Seeders\Training\TrainingSeeder;
 use Database\Seeders\User\UserSeeder;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,7 +28,10 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             HomeSeeder::class,
             UserSeeder::class,
-            ContactUsSeeder::class
+            ContactUsSeeder::class,
+            DepartmentSeeder::class,
+            TrainingSeeder::class,
+            ManualSeeder::class,
         ]);
     }
 }
