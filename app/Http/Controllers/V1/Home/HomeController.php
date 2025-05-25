@@ -69,6 +69,7 @@ class HomeController extends Controller
 
         if(isset($request['images']))
         {
+            $this->fileUploaderService->clearCollection($home, 'slider_images');
             $this->fileUploaderService->uploadMultipleFiles($home, $request['images'], 'slider_images');
         }
 
