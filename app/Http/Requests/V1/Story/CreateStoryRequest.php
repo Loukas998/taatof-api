@@ -33,7 +33,7 @@ class CreateStoryRequest extends FormRequest
         {
             $rules += [
                 'body'    => 'required|string',
-                'summary' => 'required|string',
+                'summary' => 'nullable|string',
                 'image'   => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
             ];
         }elseif($this->input('type') === 'vlog')
