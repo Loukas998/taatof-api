@@ -101,10 +101,12 @@ class TrainingController extends Controller
     {
         $data = $request->validated();
         $trainings = $data['trainings'];
+
+        Training::truncate();
+
         foreach($trainings as $trainingData)
         {
-            $training = Training::updateOrCreate(
-                ['id' => $trainingData['id'] ?? null], // Find by ID if provided
+            $training = Training::create(
                 [
                     'title' => [
                         'en' => $trainingData['title_en'],

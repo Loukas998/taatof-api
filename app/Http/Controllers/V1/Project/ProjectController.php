@@ -97,6 +97,7 @@ class ProjectController extends Controller
 
         if(isset($request['images']))
         {
+            $this->fileUploaderService->clearCollection($project, 'images');
             $this->fileUploaderService->uploadMultipleFiles($project, $request['images'],'images');
         }
         if(isset($request['image_replacements']))
@@ -129,11 +130,11 @@ class ProjectController extends Controller
         $data = $request->validated();
         $projects = $data['projects'];
         
+        Project::truncate();
+
         foreach($projects as $projectData)
         {
-            // Use updateOrCreate instead of findOrFail + update
-            $project = Project::updateOrCreate(
-                ['id' => $projectData['id'] ?? null], // Find by ID if provided
+            $project = Project::create(
                 [
                     'title' => [
                         'en' => $projectData['title_en'],
@@ -154,14 +155,6 @@ class ProjectController extends Controller
             {
                 $this->fileUploaderService->clearCollection($project, 'images');
                 $this->fileUploaderService->uploadMultipleFiles($project, $projectData['images'], 'images');
-            }
-
-            if(isset($projectData['image_replacements']))
-            {
-                foreach($projectData['image_replacements'] as $image)
-                {
-                    $this->fileUploaderService->replaceFile($project, $image['new_image'], $image['id'], 'images');
-                }
             }
         }
     

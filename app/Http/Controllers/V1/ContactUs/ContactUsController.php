@@ -23,18 +23,11 @@ class ContactUsController extends Controller
         return ApiResponse::success(ContactUsDashResource::make($contactUs), 'Contact Us retrieved');
     }
 
-    public function update(UpdateContactUsRequest $request)
+    public function bulk_update(UpdateContactUsRequest $request)
     {
         $data = $request->validated();
-        $contactUs = ContactUs::where('id', 1)->first();
-        $contactUs->update([
-            'email'        => $data['email'],
-            'phone_number' => $data['phone_number'],
-            'location'     => [
-                'en' => $data['location_en'],
-                'ar' => $data['location_ar'],
-            ]
-        ]);
+        ContactUs::truncate();
+        $contactUs = ContactUs::create($data);
         return ApiResponse::success(ContactUsDashResource::make($contactUs), 'Contact Us updated');
     }
 }

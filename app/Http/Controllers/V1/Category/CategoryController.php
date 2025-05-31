@@ -120,11 +120,12 @@ class CategoryController extends Controller
     {
         $data = $request->validated();
         $categories = $data['categories'];
+
+        Category::truncate();
         
         foreach($categories as $categoryData)
         {
-            $category = Category::updateOrCreate(
-                ['id' => $categoryData['id'] ?? null], // Find by ID if provided
+            $category = Category::create(
                 [
                     'project_id' => $categoryData['project_id'],
                     'name' => [

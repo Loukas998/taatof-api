@@ -51,35 +51,26 @@ class HomeController extends Controller
     public function update(UpdateHomeRequest $request)
     {
         $data = $request->validated();
-        $home = Home::findOrFail(1);
-        $home->update([
+        Home::truncate();
+        $home = Home::create([
             'title'               => [
-                'en' => $data['title_en'] ?? $home->getTranslation('title', 'en', false),
-                'ar' => $data['title_ar'] ?? $home->getTranslation('title', 'ar', false),
+                'en' => $data['title_en'],
+                'ar' => $data['title_ar']  
             ],
             'subtitle'            => [
-                'en' => $data['subtitle_en'] ?? $home->getTranslation('subtitle', 'en', false),
-                'ar' => $data['subtitle_ar'] ?? $home->getTranslation('subtitle', 'ar', false),
+                'en' => $data['subtitle_en'],  
+                'ar' => $data['subtitle_ar']  
             ],
-            'trainings_number'    => $data['trainings_number'] ?? $home->trainings_number,
-            'trainers_number'     => $data['trainers_number'] ?? $home->trainers_number,
-            'stories_number'      => $data['stories_number'] ?? $home->stories_number,
-            'life_groups_members' => $data['life_groups_members'] ?? $home->life_groups_members,
+            'trainings_number'    => $data['trainings_number'],
+            'trainers_number'     => $data['trainers_number'], 
+            'stories_number'      => $data['stories_number'], 
+            'life_groups_members' => $data['life_groups_members'], 
         ]);
 
         if(isset($request['images']))
         {
             $this->fileUploaderService->clearCollection($home, 'slider_images');
             $this->fileUploaderService->uploadMultipleFiles($home, $request['images'], 'slider_images');
-        }
-
-        
-        if(isset($request['image_replacements']))
-        {
-            foreach($request['image_replacements'] as $image)
-            {
-                $this->fileUploaderService->replaceFile($home, $image, $image['id'], 'slider_images');
-            }
         }
         
         return ApiResponse::success(HomeDashResource::make($home), 'Home page content updated successfully');

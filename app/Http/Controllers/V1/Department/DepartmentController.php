@@ -128,11 +128,12 @@ class DepartmentController extends Controller
     {
         $data = $request->validated();
         $departments = $data['departments'];
+
+        Department::truncate();
         
         foreach($departments as $departmentData)
         {
-            $department = Department::updateOrCreate(
-                ['id' => $departmentData['id'] ?? null], // Find by ID if provided
+            $department = Department::create(
                 [
                     'title' => [
                         'en' => $departmentData['title_en'],
@@ -151,14 +152,6 @@ class DepartmentController extends Controller
             {
                 $this->fileUploaderService->clearCollection($department, 'images');
                 $this->fileUploaderService->uploadMultipleFiles($department, $departmentData['images'], 'images');
-            }
-
-            if(isset($departmentData['image_replacements']))
-            {
-                foreach($departmentData['image_replacements'] as $image)
-                {
-                    $this->fileUploaderService->replaceFile($department, $image['new_image'], $image['id'], 'images');
-                }
             }
         }
     
