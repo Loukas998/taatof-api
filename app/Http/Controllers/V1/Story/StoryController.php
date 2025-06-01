@@ -192,8 +192,9 @@ class StoryController extends Controller
         $data = $request->validated();
         $story = Story::findOrFail($id);
         $story->update([
-            'status' => $data['status'],
-            'note'   => $data['note'] ?? $story->note,
+            'status'             => $data['status'],
+            'note'               => $data['note'] ?? $story->note,
+            'date_of_acceptance' => $data['status'] === 'accepted' ? now() : null
         ]);
         $story->participant->notify(new UpdateStoryStatus());
         return ApiResponse::success(StoryResource::make($story), 'Story status updated successfully');
