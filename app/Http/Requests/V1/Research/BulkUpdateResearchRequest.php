@@ -23,7 +23,6 @@ class BulkUpdateResearchRequest extends FormRequest
     {
         return [
             'researches'            => 'required|array',
-            'researches.*.id'       => 'nullable|integer|exists:research,id',
             'researches.*.title_en' => 'required|string',
             'researches.*.title_ar' => 'required|string'
         ];

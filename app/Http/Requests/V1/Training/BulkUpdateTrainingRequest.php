@@ -23,7 +23,6 @@ class BulkUpdateTrainingRequest extends FormRequest
     {
         return [
             'trainings'                  => 'required|array',
-            'trainings.*.id'             => 'nullable|integer|exists:trainings,id',
             'trainings.*.title_en'       => 'required|string|max:255',
             'trainings.*.title_ar'       => 'required|string|max:255',
             'trainings.*.description_en' => 'nullable|string',

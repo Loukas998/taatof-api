@@ -26,7 +26,6 @@ class HomeDashResource extends JsonResource
             'life_groups_members' => $this->life_groups_members,
             'images'               => $this->getMedia('slider_images')->map(function($media) {
                 return [
-                    'id'    => $media->id,
                     'url'   => $media->getFullUrl()
                 ];
             }),

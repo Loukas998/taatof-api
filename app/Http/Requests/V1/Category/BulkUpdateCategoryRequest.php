@@ -23,7 +23,6 @@ class BulkUpdateCategoryRequest extends FormRequest
     {
         return [
             'categories'                  => 'required|array',
-            'categories.*.id'             => 'nullable|integer|exists:categories,id',
             'categories.*.project_id'     => 'nullable|integer|exists:projects,id',
             'categories.*.name_en'        => 'required|string|max:255',
             'categories.*.name_ar'        => 'required|string|max:255',

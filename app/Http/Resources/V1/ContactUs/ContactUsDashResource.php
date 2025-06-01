@@ -22,7 +22,7 @@ class ContactUsDashResource extends JsonResource
             'location_ar'  => $this->getTranslation('location', 'ar'),
             'facebook'     => $this->facebook,
             'instagram'    => $this->instagram,
-            'linkedin'     => ''
+            'linkedin'     => $this->linkedin
         ];
     }
 }

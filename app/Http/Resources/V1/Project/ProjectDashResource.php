@@ -24,7 +24,6 @@ class ProjectDashResource extends JsonResource
             'detailed_description_ar' => $this->getTranslation('detailed_description', 'ar'),
             'images'                  => $this->getMedia('images')->map(function($media) {
                 return [
-                    'id'    => $media->id,
                     'url'   => $media->getFullUrl()
                 ];
             }),

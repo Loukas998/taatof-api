@@ -22,7 +22,6 @@ class DepartmentResource extends JsonResource
             'groups_number'       => $this->groups_number,
             'images'              => $this->getMedia('images')->map(function($media) {
                 return [
-                    'id'    => $media->id,
                     'url'   => $media->getFullUrl()
                 ];
             }),

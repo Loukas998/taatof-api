@@ -21,7 +21,7 @@ class ContactUsResource extends JsonResource
             'location'     => $this->getTranslation('location', app()->getLocale()),
             'facebook'     => $this->facebook,
             'instagram'    => $this->instagram,
-            'linkedin'     => ''
+            'linkedin'     => $this->linkedin
         ];
     }
 }

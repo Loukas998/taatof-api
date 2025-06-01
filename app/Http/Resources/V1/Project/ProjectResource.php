@@ -21,7 +21,6 @@ class ProjectResource extends JsonResource
             'detailed_description' => $this->getTranslation('detailed_description', app()->getLocale()),
             'images'               => $this->getMedia('images')->map(function($media) {
                 return [
-                    'id'    => $media->id,
                     'url'   => $media->getFullUrl()
                 ];
             }),
