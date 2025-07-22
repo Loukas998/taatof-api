@@ -11,6 +11,7 @@ use App\Http\Resources\V1\Home\HomeResource;
 use App\Models\Home\Home;
 use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -51,7 +52,10 @@ class HomeController extends Controller
     public function update(UpdateHomeRequest $request)
     {
         $data = $request->validated();
-        Home::truncate();
+        
+        Home::query()->delete();
+        DB::statement('ALTER TABLE home AUTO_INCREMENT = 1');
+
         $home = Home::create([
             'title'               => [
                 'en' => $data['title_en'],

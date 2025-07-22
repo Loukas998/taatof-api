@@ -12,6 +12,7 @@ use App\Http\Resources\V1\Category\CategoryResource;
 use App\Models\Category\Category;
 use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -121,7 +122,9 @@ class CategoryController extends Controller
         $data = $request->validated();
         $categories = $data['categories'];
 
-        Category::truncate();
+        //Category::truncate();
+        Category::query()->delete();
+        DB::statement('ALTER TABLE categories AUTO_INCREMENT = 1');
         
         foreach($categories as $categoryData)
         {

@@ -12,6 +12,7 @@ use App\Http\Resources\V1\Training\TrainingResource;
 use App\Models\Training\Training;
 use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TrainingController extends Controller
 {
@@ -102,7 +103,8 @@ class TrainingController extends Controller
         $data = $request->validated();
         $trainings = $data['trainings'];
 
-        Training::truncate();
+        Training::query()->delete();
+        DB::statement('ALTER TABLE trainings AUTO_INCREMENT = 1');
 
         foreach($trainings as $trainingData)
         {

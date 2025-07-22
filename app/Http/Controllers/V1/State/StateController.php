@@ -9,6 +9,7 @@ use App\Http\Resources\V1\State\StateDashResource;
 use App\Http\Resources\V1\State\StateResource;
 use App\Models\State\State;
 use App\Services\FileUploaderService;
+use Illuminate\Support\Facades\DB;
 
 class StateController extends Controller
 {
@@ -35,7 +36,8 @@ class StateController extends Controller
         $data = $request->validated();
         $states = $data['states'];
 
-        State::truncate();
+        State::query()->delete();
+        DB::statement('ALTER TABLE states AUTO_INCREMENT = 1');
 
         foreach($states as $stateData)
         {

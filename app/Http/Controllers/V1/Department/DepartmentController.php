@@ -99,16 +99,10 @@ class DepartmentController extends Controller
 
             if(isset($request['images']))
             {
+                $this->fileUploaderService->clearCollection($department, 'images');
                 $this->fileUploaderService->uploadMultipleFiles($department, $request['images'], 'images');
             }
-
-            if(isset($request['image_replacements']))
-            {
-                foreach($request['image_replacements'] as $image)
-                {
-                    $this->fileUploaderService->replaceFile($department, $image, $image['id'], 'images');
-                }
-            }
+            
             return ApiResponse::success(DepartmentDashResource::make($department), 'Department updated');
         }
         return ApiResponse::notFound('Department not found');

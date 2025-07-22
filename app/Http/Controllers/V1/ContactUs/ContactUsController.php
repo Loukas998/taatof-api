@@ -9,6 +9,7 @@ use App\Http\Resources\V1\ContactUs\ContactUsDashResource;
 use App\Http\Resources\V1\ContactUs\ContactUsResource;
 use App\Models\ContactUs\ContactUs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContactUsController extends Controller
 {
@@ -26,7 +27,8 @@ class ContactUsController extends Controller
     public function bulk_update(UpdateContactUsRequest $request)
     {
         $data = $request->validated();
-        ContactUs::truncate();
+        ContactUs::query()->delete();
+        DB::statement('ALTER TABLE contact_us AUTO_INCREMENT = 1');
         $contactUs = ContactUs::create($data);
         return ApiResponse::success(ContactUsDashResource::make($contactUs), 'Contact Us updated');
     }

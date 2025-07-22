@@ -11,6 +11,7 @@ use App\Http\Resources\V1\Research\ResearchDashResource;
 use App\Http\Resources\V1\Research\ResearchResource;
 use App\Models\Research\Research;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use LDAP\Result;
 
 class ResearchController extends Controller
@@ -82,7 +83,8 @@ class ResearchController extends Controller
         $data = $request->validated();
         $researches = $data['researches'];
 
-        Research::truncate();
+        Research::query()->delete();
+        DB::statement('ALTER TABLE research AUTO_INCREMENT = 1');
 
         foreach($researches as $researchData)
         {

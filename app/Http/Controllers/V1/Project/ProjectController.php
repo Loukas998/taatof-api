@@ -12,6 +12,7 @@ use App\Http\Resources\V1\Project\ProjectResource;
 use App\Models\Project\Project;
 use App\Services\FileUploaderService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
@@ -130,7 +131,8 @@ class ProjectController extends Controller
         $data = $request->validated();
         $projects = $data['projects'];
         
-        Project::truncate();
+        Project::query()->delete();
+        DB::statement('ALTER TABLE projects AUTO_INCREMENT = 1');
 
         foreach($projects as $projectData)
         {

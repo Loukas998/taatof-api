@@ -11,6 +11,7 @@ use App\Http\Resources\V1\Manual\ManualDashResource;
 use App\Http\Resources\V1\Manual\ManualResource;
 use App\Models\Manual\Manual;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ManualController extends Controller
 {
@@ -91,7 +92,8 @@ class ManualController extends Controller
         $data = $request->validated();
         $manuals = $data['manuals'];
 
-        Manual::truncate();
+        Manual::query()->delete();
+        DB::statement('ALTER TABLE manuals AUTO_INCREMENT = 1');
 
         foreach($manuals as $manualData)
         {
