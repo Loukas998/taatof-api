@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('trainings/bulk', [TrainingController::class, 'bulk_update'])->middleware(['auth:sanctum', 'role:admin,media']);
 
 Route::apiResource('trainings', TrainingController::class)
-    ->only(['store', 'update', 'delete'])
+    ->only(['store', 'update', 'destroy'])
     ->middleware(['auth:sanctum', 'role:admin,media']);
 
 Route::apiResource('trainings', TrainingController::class)

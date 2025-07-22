@@ -14,7 +14,7 @@ Route::get('stories/participant-stories', [StoryController::class, 'getParticipa
 Route::put('stories/chage-status/{id}', [StoryController::class, 'updateStoryStatus'])->middleware(['auth:sanctum', 'role:admin,auditor']);
 
 Route::apiResource('stories', StoryController::class)
-    ->only(['update', 'store', 'delete'])
+    ->only(['update', 'store', 'destroy'])
     ->middleware(['auth:sanctum', 'role:admin,auditor,participant']);
 
 Route::apiResource('stories', StoryController::class)

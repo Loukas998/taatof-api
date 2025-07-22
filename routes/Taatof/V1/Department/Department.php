@@ -7,7 +7,7 @@ Route::post('departments/bulk', [DepartmentController::class, 'bulk_update'])->m
 Route::post('departments/{id}', [DepartmentController::class, 'update'])->middleware(['auth:sanctum', 'role:admin,media']);
 
 Route::apiResource('departments', DepartmentController::class)
-    ->only(['store', 'delete'])
+    ->only(['store', 'destroy'])
     ->middleware(['auth:sanctum', 'role:admin,media']);
 
 Route::apiResource('departments', DepartmentController::class)
