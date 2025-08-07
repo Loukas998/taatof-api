@@ -23,6 +23,7 @@ class CreateStoryRequest extends FormRequest
     {
         $rules = [
             'state_id'           => 'nullable|integer|exists:states,id',
+            'user_id'            => 'nullable|integer|exists:users,id',
             'title'              => 'required|string|max:255',
             'categories'         => 'required|array',
             'categories.*'       => 'exists:categories,id',

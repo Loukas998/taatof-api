@@ -77,19 +77,20 @@ class UserController extends Controller
     {
         $auditorId = request()->query('auditorId');
         $participants = User::where('auditor_id', $auditorId)->get();
-        return ApiResponse::success($participants, 'Participants retrieved successfully');
+        return ApiResponse::success(AuthorsResource::collection($participants), 'Participants retrieved successfully');
     }
 
     public function getAuditorParticipant()
     {
         $user = request()->user('sanctum');
-        $participants = $user->participants();
-        return ApiResponse::success($participants, 'Participants retrieved successfully');
+        $participants = $user->participants;
+        return ApiResponse::success(AuthorsResource::collection($participants), 'Participants retrieved successfully');
     }
 
     public function getParticipants()
     {
-        $participants = User::where('role', 'participant')->get();
+        $pageSize = request()->query('page-size') ?? 10;
+        $participants = User::where('role', 'participant')->paginate($pageSize);
         return ApiResponse::success(AuthorsResource::collection($participants), 'Participants retrieved successfully');
     }
 }

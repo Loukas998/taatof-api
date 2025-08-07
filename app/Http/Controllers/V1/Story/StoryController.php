@@ -25,6 +25,9 @@ class StoryController extends Controller
      */
     public function index()
     {
+        if(!auth('sanctum')->user())
+            return ApiResponse::success(StoryResource::collection(Story::where('status', 'accepted')->get()), 'Stories retrieved');
+
         return ApiResponse::success(StoryResource::collection(Story::all(), 'Stories retrieved'));
     }
 
@@ -35,7 +38,7 @@ class StoryController extends Controller
     {
         $data = $request->validated();
         $story = Story::create([
-            'user_id'            => $request->user('sanctum')->id,
+            'user_id'            => $data['user_id'] ?? $request->user('sanctum')->id,
             'state_id'           => $data['state_id'],
             'title'              => $data['title'],
             'date_of_submitting' => now(),
@@ -100,6 +103,7 @@ class StoryController extends Controller
         $story->update([
             'state_id' => $data['state_id'],
             'title'    => $data['title'],
+            'user_id'  => $data['user_id'] ?? auth('sanctum')->user()->id
         ]);
         
         if (isset($data['categories'])) {
